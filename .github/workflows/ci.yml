@@ -1,0 +1,71 @@
+# Continuous Integration
+#
+# References:
+#
+# - https://github.com/actions/checkout
+# - https://github.com/actions/setup-node
+# - https://docs.github.com/actions/guides/building-and-testing-nodejs
+
+---
+name: continuous-integration
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      GH_PAT: ${{ secrets.PAT_GPR_ADMIN }}
+      HUSKY: 0
+      NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_ADMIN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN_ADMIN }}
+    strategy:
+      matrix:
+        node: [16.16.0]
+    steps:
+      - id: checkout
+        name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - id: node
+        name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          scope: '@${{ github.repository_owner }}'
+      - id: yarn
+        name: Install dependencies
+        if: github.actor != 'dependabot[bot]'
+        run: yarn --immutable
+      - id: yarn-dependabot
+        name: Install dependencies
+        if: github.actor == 'dependabot[bot]'
+        run: yarn --mode=update-lockfile
+      - id: format
+        name: Check code formatting
+        run: yarn check:format
+      - id: lint
+        name: Check lint status
+        run: yarn check:lint
+      - id: spelling
+        name: Check spelling
+        run: yarn check:spelling
+      - id: test
+        name: Run tests
+        run: yarn test
+        env:
+          NODE_ENV: test
+          NODE_NO_WARNINGS: 1
+          NODE_OPTIONS: --es-module-specifier-resolution=node
+          TS_NODE_PROJECT: ./tsconfig.tsnode.json
+      - id: pack
+        name: Pack project
+        run: yarn pack -o %s-%v.tgz
+        env:
+          NODE_ENV: production
+          NODE_NO_WARNINGS: 1
+          NODE_OPTIONS: --es-module-specifier-resolution=node

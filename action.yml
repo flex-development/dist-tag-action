@@ -1,0 +1,29 @@
+# GITHUB ACTION METADATA
+#
+#
+# See: https://docs.github.com/actions/creating-actions/metadata-syntax-for-github-actions
+
+---
+name: dtag
+author: '@flex-development'
+description: Distribution tag lookup utility
+inputs:
+  delimiter:
+    description: lookup target separator
+    required: false
+  target:
+    description: lookup target
+    required: false
+outputs:
+  flag:
+    description: |
+      dist tag in cli flag format (--tag <tag>) or empty string
+      see: https://docs.npmjs.com/cli/v8/commands/npm-publish#tag
+  tag:
+    description: dist tag or empty string
+runs:
+  main: dist/main.mjs
+  using: node16
+branding:
+  color: blue
+  icon: search

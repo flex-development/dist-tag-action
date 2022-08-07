@@ -7,11 +7,30 @@
 
 > [Distribution tag][3] lookup utility for GitHub Actions.
 
-## Install
+## Usage
 
 **TODO**: Update documentation.
 
-## Usage
+## Inputs and Outputs
+
+```yaml
+inputs:
+  delimiter:
+    description: lookup target separator
+    required: false
+  target:
+    description: lookup target
+    required: false
+outputs:
+  flag:
+    description: |
+      dist tag in cli flag format (--tag <tag>) or empty string
+      see: https://docs.npmjs.com/cli/v8/commands/npm-publish#tag
+  tag:
+    description: dist tag or empty string
+```
+
+## Examples
 
 **TODO**: Update documentation.
 

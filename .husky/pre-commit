@@ -6,4 +6,6 @@
 #
 # - https://github.com/okonet/lint-staged#command-line-flags
 
+yarn build
+git add dist/main.mjs
 lint-staged

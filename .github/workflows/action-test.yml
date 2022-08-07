@@ -1,0 +1,57 @@
+# Action Test
+---
+name: action-test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  action-test:
+    runs-on: ubuntu-latest
+    env:
+      STABLE: 2.0.0
+      UNSTABLE: 2.0.0-alpha.1
+      UNSTABLE_DELIMITED: foo-package@2.0.0-beta.1
+    steps:
+      - id: context
+        name: Print context
+        uses: actions/github-script@v6.1.0
+        with:
+          script: console.log(context)
+      - id: env
+        name: Print environment variables
+        run: printenv
+      - id: checkout
+        uses: actions/checkout@v3
+      - id: stable
+        name: ${{ env.STABLE }}
+        uses: ./
+        with:
+          target: ${{ env.STABLE }}
+      - id: unstable
+        name: ${{ env.UNSTABLE }}
+        uses: ./
+        with:
+          target: ${{ env.UNSTABLE }}
+      - id: unstable-delimited
+        name: ${{ env.UNSTABLE_DELIMITED }}
+        uses: ./
+        with:
+          delimiter: '@'
+          target: ${{ env.UNSTABLE_DELIMITED }}
+      - id: outputs
+        name: Outputs
+        run: |
+          echo ${{ env.STABLE }}
+          echo "tag: '${{ steps.stable.outputs.tag }}'"
+          echo "flag: '${{ steps.stable.outputs.flag }}'"
+
+          echo ${{ env.UNSTABLE }}
+          echo "tag: '${{ steps.unstable.outputs.tag }}'"
+          echo "flag: '${{ steps.unstable.outputs.flag }}'"
+
+          echo ${{ env.UNSTABLE_DELIMITED }}
+          echo "tag: '${{ steps.unstable-delimited.outputs.tag }}'"
+          echo "flag: '${{ steps.unstable-delimited.outputs.flag }}'"

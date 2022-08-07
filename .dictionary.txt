@@ -18,6 +18,7 @@ esbuild
 fbca
 fpnv
 gpgsign
+hmarr
 iife
 lcov
 lintstagedrc
@@ -28,6 +29,7 @@ npmrc
 nums
 nvmrc
 pdel
+printenv
 rickstaa
 safecrlf
 syncer

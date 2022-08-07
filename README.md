@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/github/license/flex-development/dtag-action.svg)](LICENSE.md)
 [![typescript](https://badgen.net/badge/-/typescript?color=2a72bc&icon=typescript&label)](https://typescriptlang.org)
 
-> [Distribution tag][1] lookup utility for GitHub Actions.
+> [Distribution tag][3] lookup utility for GitHub Actions.
 
 ## Install
 
@@ -15,4 +15,11 @@
 
 **TODO**: Update documentation.
 
-[1]: https://docs.npmjs.com/cli/v8/commands/npm-dist-tag
+## Built With
+
+- [`@actions/core`][1]
+- [`@flex-development/dtag`][2]
+
+[1]: https://github.com/actions/toolkit/tree/main/packages/core
+[2]: https://github.com/flex-development/dtag
+[3]: https://docs.npmjs.com/cli/v8/commands/npm-dist-tag

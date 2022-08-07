@@ -55,5 +55,5 @@ coverage/
 # Builds
 # ------------------------------------------------------------------------------
 dist/*
-!dist/index.mjs
+!dist/main.mjs
 !typings/**/dist/*

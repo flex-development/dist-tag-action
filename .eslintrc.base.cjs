@@ -184,7 +184,6 @@ const config = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-extra-non-null-assertion': 2,
     '@typescript-eslint/no-extra-parens': 0,
-    '@typescript-eslint/no-extra-semi': 2,
     '@typescript-eslint/no-extraneous-class': [
       2,
       {
@@ -456,6 +455,7 @@ const config = {
     'no-array-constructor': 0,
     'no-case-declarations': 0,
     'no-duplicate-imports': 0,
+    'no-empty': 0,
     'no-empty-function': 0,
     'no-ex-assign': 0,
     'no-invalid-this': 0,

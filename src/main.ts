@@ -3,4 +3,6 @@
  * @module dtag-action/main
  */
 
-export {}
+import run from './run'
+
+run()

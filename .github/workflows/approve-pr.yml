@@ -1,0 +1,31 @@
+# Approve Pull Request
+#
+# Automatically approve a pull request when a review is requested from
+# @flexdevelopment by certain users.
+#
+#
+# References:
+#
+# - https://cli.github.com/manual/gh_pr_review
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+
+---
+name: approve-pr
+on:
+  pull_request:
+    types:
+      - review_requested
+permissions:
+  pull-requests: write
+jobs:
+  approve-pr:
+    if: github.event.requested_reviewer == 'flexdevelopment'
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - id: approve
+        name: Approve pull request
+        if: github.actor == 'unicornware'
+        run: gh pr review $PR_NUMBER --approve --body "lgtm 👍🏾"

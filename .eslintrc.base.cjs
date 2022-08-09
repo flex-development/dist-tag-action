@@ -16,7 +16,7 @@ const tsconfig = require('tsconfig/dist/tsconfig').loadSync(__dirname).config
  */
 const config = {
   env: {
-    [tsconfig.compilerOptions.target]: true,
+    es2022: true,
     node: true
   },
   extends: [

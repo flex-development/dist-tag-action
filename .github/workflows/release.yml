@@ -82,8 +82,8 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
-      - id: node
-        name: Use Node.js ${{ matrix.node-version }}
+      - id: setup-node
+        name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}

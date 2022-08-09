@@ -1,0 +1,93 @@
+# Label Merged Issues
+#
+# Add the `status:merged` label to a pull request's linked issues when a pull
+# request is merged into `main` or on workflow dispatch.
+#
+# References:
+#
+# - https://docs.github.com/en/graphql/reference/objects#pullrequest
+# - https://github.com/actions/github-script
+# - https://github.com/octokit/graphql-action
+
+---
+name: label-merged-issues
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: pull request number
+        required: true
+jobs:
+  label-merged-issues:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'release/') == false
+    runs-on: ubuntu-latest
+    steps:
+      - id: pr
+        name: Get pull request number
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            const { inputs, pull_request } = context.payload
+            return Number.parseInt(inputs.pr || pull_request.number || '0')
+      - id: query
+        name: Query linked issues
+        if: steps.pr.outputs.result != 0
+        uses: octokit/graphql-action@v2.2.22
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
+        with:
+          query: |
+            query (
+              $owner: String!,
+              $repo: String!,
+              $pr: Int!,
+              $limit: Int = 20
+            ) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $pr) {
+                  closingIssuesReferences(
+                    first: $limit
+                    orderBy: { direction: ASC, field: CREATED_AT }
+                  ) {
+                    edges {
+                      node {
+                        number
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          owner: ${{ github.repository_owner }}
+          pr: ${{ steps.pr.outputs.result }}
+          repo: ${{ github.event.repository.name }}
+      - id: label
+        name: Add status:merged label to linked issues
+        if: steps.pr.outputs.result != 0
+        uses: actions/github-script@v6.1.0
+        env:
+          DATA: ${{ steps.query.outputs.data }}
+        with:
+          script: |
+            const { pullRequest } = JSON.parse(process.env.DATA).repository
+            const { edges } = pullRequest.closingIssuesReferences
+
+            const issues = edges.map(edge => edge.node.number)
+
+            for (const issue_number of issues) {
+              await github.rest.issues.addLabels({
+                ...context.repo,
+                issue_number,
+                labels: ['status:merged']
+              })
+
+              console.log(`added status:merged label to #${issue_number}`)
+            }

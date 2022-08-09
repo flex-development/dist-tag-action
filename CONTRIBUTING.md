@@ -363,9 +363,9 @@ Before releasing, the following steps must be completed:
        - pack project
        - create and push new tag
        - create and publish github release
-   - PR reviewer should go through the PR's linked issues and:
-     - add `status:merged` label
-     - add `status:released` label
+       - add the `status:released` label to all linked issues
+       - make sure all issues with the `status:released` label are closed
+       - delete the release branch
 
 [1]: https://brew.sh
 [2]:

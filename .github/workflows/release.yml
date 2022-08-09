@@ -1,12 +1,19 @@
 # Release
 #
+# Publish GitHub release when a `release/*` branch is merged into `main` or on
+# workflow dispatch.
+#
 # References:
 #
 # - https://cli.github.com/manual/gh_release_create
+# - https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
 # - https://github.com/actions/checkout
 # - https://github.com/actions/github-script
 # - https://github.com/actions/setup-node
+# - https://github.com/bdougie/close-issues-based-on-label
+# - https://github.com/dawidd6/action-delete-branch
+# - https://github.com/octokit/graphql-action
 # - https://github.com/rickstaa/action-create-tag
 
 ---
@@ -15,7 +22,8 @@ on:
   pull_request:
     branches:
       - main
-    types: [closed]
+    types:
+      - closed
   workflow_dispatch:
     inputs:
       version:
@@ -25,24 +33,37 @@ jobs:
   metadata:
     name: Metadata
     if: |
-      github.event.inputs.version ||
+      github.event_name == 'workflow_dispatch' ||
       (startsWith(github.event.pull_request.head.ref, 'release/')
       && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     outputs:
-      artifact-name: ${{ steps.release.outputs.artifact-name }}
-      artifact-path: ${{ steps.release.outputs.artifact-path }}
-      dist-tag: ${{ steps.release.outputs.dist-tag }}
-      message: ${{ steps.release.outputs.message }}
-      prerelease: ${{ steps.release.outputs.prerelease }}
-      tag: ${{ steps.release.outputs.tag }}
+      artifact-path: ${{ steps.artifact.outputs.result }}
+      message: ${{ steps.version.outputs.message }}
+      prerelease: ${{ steps.prerelease.outputs.result }}
+      scope: ${{ steps.workspace.outputs.scope }}
+      tag: ${{ steps.version.outputs.tag }}
+      version: ${{ steps.version.outputs.version }}
     steps:
-      - id: release
-        name: Get release metadata
+      - id: workspace
+        name: Get workspace
         uses: actions/github-script@v6.1.0
         with:
           script: |
+            const scope = `@${context.repo.owner}`
+
+            core.setOutput('scope', scope)
+            core.setOutput('workspace', `${scope}/${context.repo.repo}`)
+      - id: version
+        name: Get version
+        uses: actions/github-script@v6.1.0
+        env:
+          WORKSPACE: ${{ steps.workspace.outputs.workspace }}
+        with:
+          script: |
             const { payload, repo } = context
+
+            const workspace = process.env.WORKSPACE
 
             let version
 
@@ -52,25 +73,43 @@ jobs:
 
             if (payload.inputs) version = payload.inputs.version
 
-            const workspace = `@${repo.owner}/${repo.repo}`
-            const artifact_name = `${workspace.replace('/', '-')}-${version}`
-            const artifact_path = `./${artifact_name}.tgz`
-
-            let dist_tag = version.match(/(?!-)([a-z]+)/)?.[0].trim() ?? ''
-            if (dist_tag) dist_tag = `--tag ${dist_tag}`
-
-            core.setOutput('artifact-name', artifact_name)
-            core.setOutput('artifact-path', artifact_path)
-            core.setOutput('dist-tag', dist_tag)
             core.setOutput('message', `release: ${workspace}@${version}`)
-            core.setOutput('prerelease', !!dist_tag)
-            core.setOutput('tag', `${repo.repo}@${version}`)
-  publish-release:
+            core.setOutput('tag', version)
+            core.setOutput('version', version)
+      - id: artifact
+        name: Get artifact path
+        uses: actions/github-script@v6.1.0
+        env:
+          WORKSPACE: ${{ steps.workspace.outputs.workspace }}
+          VERSION: ${{ steps.version.outputs.version }}
+        with:
+          result-encoding: string
+          script: |
+            const workspace = process.env.WORKSPACE
+            const version = process.env.VERSION
+
+            return `./${workspace.replace('/', '-')}-${version}.tgz`
+      - id: dist-tag
+        name: Get dist tag
+        uses: ./
+        with:
+          prefix: ''
+          target: ${{ steps.version.outputs.version }}
+      - id: prerelease
+        name: Check for prerelease
+        uses: actions/github-script@v6.1.0
+        env:
+          DIST_TAG: ${{ steps.dist-tag.outputs.tag }}
+        with:
+          # todo: calculate number of prereleases to include in release notes
+          script: return !!process.env.DIST_TAG
+  publish:
     name: Publish GitHub release
     needs: metadata
     runs-on: ubuntu-latest
     env:
       GH_PAT: ${{ secrets.PAT_GPR_ADMIN }}
+      NOTES_FILE: ./RELEASE_NOTES.md
       NPM_TOKEN: ${{ secrets.NPM_TOKEN_ADMIN }}
     strategy:
       matrix:
@@ -87,7 +126,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          scope: '@${{ github.repository_owner }}'
+          scope: ${{ needs.metadata.outputs.scope }}
       - id: yarn
         name: Install dependencies
         run: yarn --immutable
@@ -103,8 +142,8 @@ jobs:
           NODE_OPTIONS: --es-module-specifier-resolution=node
       - id: release-notes
         name: Generate release notes
-        run: |
-          ./node_modules/.bin/ts-node ./node_modules/.bin/conventional-changelog -n ./changelog.config.cts -o RELEASE_NOTES.md
+        # todo: handle prereleases
+        run: yarn conventional-changelog -o $NOTES_FILE
         env:
           TS_NODE_PROJECT: ./tsconfig.tsnode.json
       - id: tag
@@ -120,6 +159,74 @@ jobs:
         env:
           ASSET: ${{ needs.metadata.outputs.artifact-path }}
           GITHUB_TOKEN: ${{ env.GH_PAT }}
-          NOTES_FILE: ./RELEASE_NOTES.md
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
           TAG: ${{ needs.metadata.outputs.tag }}
+  cleanup:
+    name: Cleanup
+    needs: [metadata, publish]
+    runs-on: ubuntu-latest
+    steps:
+      - id: linked-issues
+        name: Get linked issues
+        if: github.event_name != 'workflow_dispatch'
+        uses: octokit/graphql-action@v2.2.22
+        with:
+          query: |
+            query (
+              $owner: String!,
+              $repo: String!,
+              $pull_request: Int!,
+              $first: Int = 20
+            ) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $pull_request) {
+                  closingIssuesReferences(
+                    first: $first
+                    orderBy: { direction: ASC, field: CREATED_AT }
+                  ) {
+                    edges {
+                      node {
+                        number
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          owner: ${{ github.event.repository.owner.name }}
+          pull_request: ${{ github.event.pull_request.number }}
+          repo: ${{ github.event.repository.name }}
+      - id: label-linked-issues
+        name: Add status:released label to linked issues
+        if: github.event_name != 'workflow_dispatch'
+        uses: actions/github-script@v6.1.0
+        env:
+          DATA: ${{ steps.linked-issues.outputs.data }}
+        with:
+          script: |
+            const { pullRequest } = JSON.parse(process.env.DATA).repository
+            const { edges } = pullRequest.closingIssuesReferences
+
+            const issues = edges.map(edge => edge.node.number)
+
+            for (const { number: issue_number } of issues) {
+              await github.issues.addLabels({
+                ...context.repo,
+                issue_number,
+                labels: ['status:released']
+              })
+            }
+      - id: close-released-issues
+        name: Close issues with status:released label
+        uses: bdougie/close-issues-based-on-label@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          LABEL: status:released
+      - id: delete-release-branch
+        name: Delete branch release/${{ needs.metadata.outputs.version }}
+        if: github.event_name != 'workflow_dispatch'
+        uses: dawidd6/action-delete-branch@v3.1.0
+        with:
+          branches: release/
+          github_token: ${{ github.token }}
+          suffix: ${{ needs.metadata.outputs.version }}

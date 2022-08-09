@@ -24,11 +24,10 @@ import pkg from './package.json'
  */
 const config: Config = {
   options: {
-    lernaPackage: pkg.name.split('/')[1],
     preset: {
       header: '',
       name: 'conventionalcommits',
-      releaseCommitMessageFormat: 'release: {{currentTag}}',
+      releaseCommitMessageFormat: `release: ${pkg.name}@{{version}}`,
       types: [
         { section: ':package: Build', type: 'build' },
         { section: ':house_with_garden: Housekeeping', type: 'chore' },
@@ -55,13 +54,22 @@ const config: Config = {
      * @return {void} Nothing when complete
      */
     transform(commit: CommitRaw, apply: Options.Transform.Callback): void {
+      commit.committerDate = dateformat(commit.committerDate, 'yyyy-mm-dd')
+
+      if (commit.gitTags) {
+        commit = Object.assign({}, commit, {
+          version:
+            /tag:\s*[=v]?(.+?)[),]/g.exec(commit.gitTags)?.[1] ?? undefined
+        })
+      }
+
+      commit.notes = commit.notes.map(note => ({
+        ...note,
+        text: note.text.replace(/(\n?\n?Signed-off-by:).+/gm, '')
+      }))
+
       return void apply(null, {
         ...commit,
-        committerDate: dateformat(commit.committerDate, 'yyyy-mm-dd', true),
-        notes: commit.notes.map(note => ({
-          ...note,
-          text: note.text.replace(/(\n?\n?Signed-off-by:).+/gm, '')
-        })),
         raw: commit,
         shortHash: commit.hash.slice(0, 7)
       })

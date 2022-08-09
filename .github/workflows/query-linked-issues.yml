@@ -16,7 +16,7 @@ on:
       limit:
         description: max number of issues to retrieve
         required: false
-      pull_request:
+      pr:
         description: pull request number
         required: true
 jobs:
@@ -33,11 +33,11 @@ jobs:
             query (
               $owner: String!,
               $repo: String!,
-              $pull_request: Int!,
+              $pr: Int!,
               $limit: Int = 20
             ) {
               repository(owner: $owner, name: $repo) {
-                pullRequest(number: $pull_request) {
+                pullRequest(number: $pr) {
                   closingIssuesReferences(
                     first: $limit
                     orderBy: { direction: ASC, field: CREATED_AT }
@@ -53,7 +53,7 @@ jobs:
             }
           limit: ${{ github.event.inputs.limit }}
           owner: ${{ github.repository_owner }}
-          pull_request: ${{ github.event.inputs.pull_request }}
+          pr: ${{ github.event.inputs.pr }}
           repo: ${{ github.event.repository.name }}
       - id: log
         name: Log linked issues

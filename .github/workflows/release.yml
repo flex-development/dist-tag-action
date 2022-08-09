@@ -26,8 +26,14 @@ on:
       - closed
   workflow_dispatch:
     inputs:
+      pr:
+        description: pull request number
+        required: true
+      ref:
+        description: commit to checkout
+        required: true
       version:
-        description: release version
+        description: project version
         required: true
 jobs:
   metadata:
@@ -40,13 +46,15 @@ jobs:
     outputs:
       artifact-path: ${{ steps.artifact.outputs.result }}
       message: ${{ steps.version.outputs.message }}
+      pr: ${{ steps.pr.outputs.result }}
       prerelease: ${{ steps.prerelease.outputs.result }}
+      ref: ${{ steps.ref.outputs.result }}
       scope: ${{ steps.workspace.outputs.scope }}
       tag: ${{ steps.version.outputs.tag }}
       version: ${{ steps.version.outputs.version }}
     steps:
       - id: checkout
-        name: Checkout branch main
+        name: Checkout main
         uses: actions/checkout@v3
         with:
           ref: main
@@ -67,16 +75,17 @@ jobs:
         with:
           script: |
             const { payload, repo } = context
+            const { inputs, pull_request } = payload
 
             const workspace = process.env.WORKSPACE
 
             let version
 
-            if (payload.pull_request) {
-              version = payload.pull_request.head.ref.split('release/')[1]
+            if (pull_request) {
+              version = pull_request.head.ref.split('release/')[1]
             }
 
-            if (payload.inputs) version = payload.inputs.version
+            if (inputs) version = inputs.version
 
             core.setOutput('message', `release: ${workspace}@${version}`)
             core.setOutput('tag', version)
@@ -107,6 +116,19 @@ jobs:
         with:
           # todo: calculate number of prereleases to include in release notes
           script: return !!process.env.DIST_TAG
+      - id: pr
+        name: Get pull request number
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            const { inputs, pull_request } = context.payload
+            return Number.parseInt(inputs.pr || pull_request.number || '0')
+      - id: ref
+        name: Get checkout ref
+        uses: actions/github-script@v6.1.0
+        with:
+          result-encoding: string
+          script: return context.payload.inputs.ref || 'main'
   publish:
     name: Publish GitHub release
     needs: metadata
@@ -120,11 +142,11 @@ jobs:
         node: [16.16.0]
     steps:
       - id: checkout
-        name: Checkout branch main
+        name: Checkout ${{ needs.metadata.outputs.ref }}
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: main
+          ref: ${{ needs.metadata.outputs.ref }}
       - id: setup-node
         name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
@@ -171,8 +193,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: linked-issues
-        name: Get linked issues
-        if: github.event_name != 'workflow_dispatch'
+        name: Query linked issues
         uses: octokit/graphql-action@v2.2.22
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
@@ -181,13 +202,13 @@ jobs:
             query (
               $owner: String!,
               $repo: String!,
-              $pull_request: Int!,
-              $first: Int = 20
+              $pr: Int!,
+              $limit: Int = 20
             ) {
               repository(owner: $owner, name: $repo) {
-                pullRequest(number: $pull_request) {
+                pullRequest(number: $pr) {
                   closingIssuesReferences(
-                    first: $first
+                    first: $limit
                     orderBy: { direction: ASC, field: CREATED_AT }
                   ) {
                     edges {
@@ -200,11 +221,10 @@ jobs:
               }
             }
           owner: ${{ github.repository_owner }}
-          pull_request: ${{ github.event.pull_request.number }}
+          pr: ${{ needs.metadata.outputs.pr }}
           repo: ${{ github.event.repository.name }}
       - id: label-linked-issues
         name: Add status:released label to linked issues
-        if: github.event_name != 'workflow_dispatch'
         uses: actions/github-script@v6.1.0
         env:
           DATA: ${{ steps.linked-issues.outputs.data }}
@@ -230,7 +250,6 @@ jobs:
           LABEL: status:released
       - id: delete-release-branch
         name: Delete branch release/${{ needs.metadata.outputs.version }}
-        if: github.event_name != 'workflow_dispatch'
         uses: dawidd6/action-delete-branch@v3.1.0
         with:
           branches: release/

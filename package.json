@@ -5,6 +5,8 @@
   "keywords": [
     "dist-tag",
     "github-action",
+    "npm-dist-tag",
+    "npm-publish",
     "typescript"
   ],
   "license": "BSD-3-Clause",

@@ -16,7 +16,7 @@ import lookup from '@flex-development/dist-tag'
  *
  * If a tag isn't found, all outputs will be set to empty strings.
  *
- * [1]: https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
+ * [1]: https://docs.github.com/actions/creating-actions/metadata-syntax-for-github-actions#inputs
  * [2]: https://docs.npmjs.com/cli/v8/commands/npm-dist-tag
  * [3]: https://docs.npmjs.com/cli/v8/commands/npm-publish#tag
  *

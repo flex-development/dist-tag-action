@@ -369,7 +369,7 @@ Before releasing, the following steps must be completed:
 
 [1]: https://brew.sh
 [2]:
-  https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
+  https://docs.github.com/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
 [3]: https://yarnpkg.com/getting-started
 [4]: https://yarnpkg.com/advanced/lifecycle-scripts#environment-variables
 [5]: https://github.com/typicode/husky

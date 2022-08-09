@@ -2,10 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "allowCompoundWords": true,
   "caseSensitive": false,
-  "dictionaries": ["@flex-development/dtag"],
+  "dictionaries": ["@flex-development/dist-tag-action"],
   "dictionaryDefinitions": [
     {
-      "name": "@flex-development/dtag",
+      "name": "@flex-development/dist-tag-action",
       "path": "./.dictionary.txt"
     }
   ],
@@ -34,5 +34,5 @@
   "useGitignore": true,
   "usePnP": false,
   "version": "0.2",
-  "words": ["dtag", "fldv"]
+  "words": ["fldv"]
 }

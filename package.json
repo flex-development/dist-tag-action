@@ -1,5 +1,5 @@
 {
-  "name": "@flex-development/dtag-action",
+  "name": "@flex-development/dist-tag-action",
   "description": "Distribution tag lookup utility for GitHub Actions",
   "version": "0.0.0",
   "keywords": [
@@ -8,13 +8,13 @@
     "typescript"
   ],
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/flex-development/dtag-action",
+  "homepage": "https://github.com/flex-development/dist-tag-action",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flex-development/dtag-action.git"
+    "url": "https://github.com/flex-development/dist-tag-action.git"
   },
   "bugs": {
-    "url": "https://github.com/flex-development/dtag-action/issues"
+    "url": "https://github.com/flex-development/dist-tag-action/issues"
   },
   "author": {
     "name": "Lexus Drumgold",
@@ -58,7 +58,7 @@
     "@commitlint/config-conventional": "17.0.3",
     "@commitlint/types": "17.0.0",
     "@faker-js/faker": "7.4.0",
-    "@flex-development/dtag": "2.0.0",
+    "@flex-development/dist-tag": "1.0.0",
     "@flex-development/tutils": "5.0.0-dev.1",
     "@types/chai": "4.3.3",
     "@types/conventional-changelog": "3.1.1",

@@ -1,6 +1,6 @@
 /**
  * @file Main
- * @module dtag-action/main
+ * @module dist-tag-action/main
  */
 
 import run from './run'

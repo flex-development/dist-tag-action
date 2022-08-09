@@ -1,15 +1,15 @@
 /**
  * @file Functional Tests - run
- * @module dtag-action/tests/functional/run
+ * @module dist-tag-action/tests/functional/run
  */
 
 import { getInput, setFailed, setOutput } from '@actions/core'
-import dtag from '@flex-development/dtag'
+import lookup from '@flex-development/dist-tag'
 import { Mock } from 'vitest'
 import testSubject from '../run'
 
 vi.mock('@actions/core')
-vi.mock('@flex-development/dtag')
+vi.mock('@flex-development/dist-tag')
 
 describe('functional:run', () => {
   beforeEach(() => {
@@ -23,8 +23,8 @@ describe('functional:run', () => {
   })
 
   it('should perform lookup', () => {
-    expect(dtag).toHaveBeenCalledOnce()
-    expect(dtag).toHaveBeenCalledWith({ delimiter: undefined, target: '' })
+    expect(lookup).toHaveBeenCalledOnce()
+    expect(lookup).toHaveBeenCalledWith({ delimiter: undefined, target: '' })
   })
 
   it('should set outputs', () => {
@@ -36,7 +36,7 @@ describe('functional:run', () => {
   it(`should set action status to ${pf('failed')} if error is thrown`, () => {
     // Arrange
     const error = new Error('test message')
-    ;(dtag as Mock).mockImplementationOnce(() => {
+    ;(lookup as Mock).mockImplementationOnce(() => {
       throw error
     })
 

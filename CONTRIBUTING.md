@@ -14,8 +14,8 @@ Follow the steps below to setup your local development environment:
 1. Clone repository
 
    ```sh
-   git clone https://github.com/flex-development/dtag-action
-   cd dtag-action
+   git clone https://github.com/flex-development/dist-tag-action
+   cd dist-tag-action
    ```
 
 2. Install binaries with [Homebrew][1]
@@ -278,7 +278,7 @@ When you're ready to submit your changes, open a pull request (PR) against
 `main`:
 
 ```sh
-https://github.com/flex-development/dtag-action/compare/main...$branch
+https://github.com/flex-development/dist-tag-action/compare/main...$branch
 ```
 
 where `$branch` is the name of the branch you'd like to merge into `main`.
@@ -328,7 +328,7 @@ e.g:
 
 - `refactor(plugin): authentication #52`
 - `perf(web): decrease page loading time #26`
-- `release: @flex-development/dtag-action@1.0.0 #13`
+- `release: @flex-development/dist-tag-action@1.0.0 #13`
 
 ## Releasing
 
@@ -352,11 +352,11 @@ Before releasing, the following steps must be completed:
 4. `yarn release $(fx package.json .version)`
 5. Open a new PR from `release/*` into `main`
    - pr title should match `release: <package.json#name>@<new-version>`
-     - e.g: `release: @flex-development/dtag-action@1.1.0`
+     - e.g: `release: @flex-development/dist-tag-action@1.1.0`
    - link all issues being released
    - after review, `squash and merge` PR
-     - `release: @flex-development/dtag-action@<new-version> (#pull-request-n)`
-       - e.g: `release: @flex-development/dtag-action@1.1.0 (#3)`
+     - `release: @flex-development/dist-tag-action@<new-version> (#pull-request-n)`
+       - e.g: `release: @flex-development/dist-tag-action@1.1.0 (#3)`
    - once PR is merged, release workflow will be triggered
    - PR reviewer should make sure workflow completes all jobs successfully
      - if successful, the workflow will:

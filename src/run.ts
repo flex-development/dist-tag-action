@@ -1,10 +1,10 @@
 /**
  * @file Run
- * @module dtag-action/run
+ * @module dist-tag-action/run
  */
 
 import { getInput, setFailed, setOutput } from '@actions/core'
-import dtag from '@flex-development/dtag'
+import lookup from '@flex-development/dist-tag'
 
 /**
  * Searches [`inputs.target`][1] for a [distribution (dist) tag][2].
@@ -43,7 +43,7 @@ function run(): void {
      *
      * @const {string} tag
      */
-    const tag: string = dtag({ delimiter, target })
+    const tag: string = lookup({ delimiter, target })
 
     setOutput('flag', tag ? ['--tag', tag].join(' ').trim() : tag)
     setOutput('tag', tag)

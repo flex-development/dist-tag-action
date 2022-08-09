@@ -1,3 +1,11 @@
+## [1.0.0-dev.2](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.1...1.0.0-dev.2) (2022-08-09)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** clarify branch used during gh release publish job ([369722d](https://github.com/flex-development/dist-tag-action/commit/369722df25738f1e94a63837c99cefaac2fc49ba))
+* **workflows:** fix `Did you forget to run actions/checkout before running your local action?` ([20dc9aa](https://github.com/flex-development/dist-tag-action/commit/20dc9aa28cae53c0d7088ae02fd0cd809784b2d6))
+
 ## 1.0.0-dev.1 (2022-08-09)
 
 

@@ -9,7 +9,34 @@
 
 ## Usage
 
-**TODO**: Update documentation.
+```yaml
+name: dist-tag
+on:
+  workflow_dispatch:
+    inputs:
+      delimiter:
+        description: lookup target separator
+        required: true
+      target:
+        description: lookup target
+        required: true
+jobs:
+  dist-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - id: dist-tag
+        name: Get dist tag
+        uses: flex-development/dist-tag-action@<VERSION>
+        with:
+          delimiter: ${{ github.event.inputs.delimiter }}
+          target: ${{ github.event.inputs.target }}
+      - id: print-raw
+        name: Print raw dist tag
+        run: echo "'${{ steps.dist-tag.outputs.tag }}'"
+      - id: print-flag
+        name: Print dist tag as npm flag (--tag <tag>)
+        run: echo "'${{ steps.dist-tag.outputs.flag }}'"
+```
 
 ## Inputs and Outputs
 

@@ -93,7 +93,6 @@ jobs:
         name: Get dist tag
         uses: ./
         with:
-          prefix: ''
           target: ${{ steps.version.outputs.version }}
       - id: prerelease
         name: Check for prerelease

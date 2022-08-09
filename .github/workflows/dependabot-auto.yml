@@ -1,0 +1,31 @@
+# Dependabot Auto
+#
+# Automatically approve Dependabot pull requests and enable auto-merge.
+#
+# References:
+#
+# - https://cli.github.com/manual/gh_pr_merge
+# - https://cli.github.com/manual/gh_pr_review
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+# - https://docs.github.com/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
+
+---
+name: dependabot-auto
+on: pull_request
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  dependabot-auto:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - id: approve-pr
+        name: Approve pull request
+        run: gh pr review $PR_NUMBER --approve
+      - id: enable-auto-merge
+        name: Enable auto-merge
+        run: gh pr merge $PR_NUMBER --auto --delete-branch --squash

@@ -2,9 +2,9 @@
 #
 # References:
 #
+# - https://docs.github.com/actions/guides/building-and-testing-nodejs
 # - https://github.com/actions/checkout
 # - https://github.com/actions/setup-node
-# - https://docs.github.com/actions/guides/building-and-testing-nodejs
 
 ---
 name: continuous-integration

@@ -2,12 +2,12 @@
 #
 # References:
 #
-# - https://github.com/actions/github-script
-# - https://github.com/actions/checkout
-# - https://github.com/actions/setup-node
-# - https://github.com/rickstaa/action-create-tag
 # - https://cli.github.com/manual/gh_release_create
 # - https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
+# - https://github.com/actions/checkout
+# - https://github.com/actions/github-script
+# - https://github.com/actions/setup-node
+# - https://github.com/rickstaa/action-create-tag
 
 ---
 name: release

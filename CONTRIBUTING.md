@@ -344,10 +344,10 @@ Before releasing, the following steps must be completed:
    - `bump major`
    - `bump minor`
    - `bump patch`
-   - `bump premajor --pre <dist-tag>`
-   - `bump preminor --pre <dist-tag>`
-   - `bump prepatch --pre <dist-tag>`
-   - `bump prerelease --pre <dist-tag>`
+   - `bump premajor --preid <dist-tag>`
+   - `bump preminor --preid <dist-tag>`
+   - `bump prepatch --preid <dist-tag>`
+   - `bump prerelease --preid <dist-tag>`
 3. `yarn conventional-changelog -i CHANGELOG.md -s`
 4. `yarn release $(fx package.json .version)`
 5. Open a new PR from `release/*` into `main`

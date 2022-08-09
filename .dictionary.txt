@@ -31,6 +31,7 @@ npmrc
 nums
 nvmrc
 pdel
+preid
 printenv
 rickstaa
 safecrlf

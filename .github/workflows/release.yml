@@ -45,6 +45,11 @@ jobs:
       tag: ${{ steps.version.outputs.tag }}
       version: ${{ steps.version.outputs.version }}
     steps:
+      - id: checkout
+        name: Checkout branch main
+        uses: actions/checkout@v3
+        with:
+          ref: main
       - id: workspace
         name: Get workspace
         uses: actions/github-script@v6.1.0

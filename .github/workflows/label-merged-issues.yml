@@ -38,7 +38,7 @@ jobs:
         with:
           script: |
             const { inputs, pull_request } = context.payload
-            return Number.parseInt(inputs.pr || pull_request.number || '0')
+            return Number.parseInt(inputs?.pr ?? pull_request?.number ?? '0')
       - id: query
         name: Query linked issues
         if: steps.pr.outputs.result != 0

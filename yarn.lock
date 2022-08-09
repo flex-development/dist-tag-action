@@ -5,12 +5,13 @@ __metadata:
   version: 7
   cacheKey: 9
 
-"@actions/core@npm:1.9.0, @actions/core@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@actions/core@npm:1.9.0"
+"@actions/core@npm:1.9.1, @actions/core@npm:^1.9.0":
+  version: 1.9.1
+  resolution: "@actions/core@npm:1.9.1"
   dependencies:
     "@actions/http-client": "npm:^2.0.1"
-  checksum: 93fb7e7988cbfbf90fd4fa7a6b19a4a1dbb7f1b5686ab9c5fe30197bf7b889dd69c0fde8be3389271fea19f60145d63a72804ca80fc8c85e49c8ad13ffee4c14
+    uuid: "npm:^8.3.2"
+  checksum: 22f2de2227d6a3b896c4ebbfdc108c9b31afa65055fc4b72adaac4a5f3eb91f646f65a82819766907ac62e4fd64820eac150861e56f06fa8b05074d3848d4400
   languageName: node
   linkType: hard
 
@@ -888,7 +889,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@flex-development/dtag-action@workspace:."
   dependencies:
-    "@actions/core": "npm:1.9.0"
+    "@actions/core": "npm:1.9.1"
     "@commitlint/cli": "npm:17.0.3"
     "@commitlint/config-conventional": "npm:17.0.3"
     "@commitlint/types": "npm:17.0.0"

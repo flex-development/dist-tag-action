@@ -53,7 +53,7 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
-    "@actions/core": "1.9.0",
+    "@actions/core": "1.9.1",
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
     "@commitlint/types": "17.0.0",

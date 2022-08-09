@@ -1,8 +1,8 @@
-query ($owner: String!, $repo: String!, $pull_request: Int!, $first: Int = 20) {
+query ($owner: String!, $repo: String!, $pull_request: Int!, $limit: Int = 20) {
   repository(owner: $owner, name: $repo) {
     pullRequest(number: $pull_request) {
       closingIssuesReferences(
-        first: $first
+        first: $limit
         orderBy: { direction: ASC, field: CREATED_AT }
       ) {
         edges {

@@ -1,0 +1,77 @@
+# Query Linked Issues
+#
+# List issues linked to a pull request.
+#
+# References:
+#
+# - https://docs.github.com/en/graphql/reference/objects#pullrequest
+# - https://github.com/actions/github-script
+# - https://github.com/octokit/graphql-action
+
+---
+name: query-linked-issues
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: max number of issues to retrieve
+        required: false
+      pull_request:
+        description: pull request number
+        required: true
+jobs:
+  query-linked-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - id: query
+        name: Query linked issues
+        uses: octokit/graphql-action@v2.2.22
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
+        with:
+          query: |
+            query (
+              $owner: String!,
+              $repo: String!,
+              $pull_request: Int!,
+              $limit: Int = 20
+            ) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $pull_request) {
+                  closingIssuesReferences(
+                    first: $limit
+                    orderBy: { direction: ASC, field: CREATED_AT }
+                  ) {
+                    edges {
+                      node {
+                        number
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          limit: ${{ github.event.inputs.limit }}
+          owner: ${{ github.repository_owner }}
+          pull_request: ${{ github.event.inputs.pull_request }}
+          repo: ${{ github.event.repository.name }}
+      - id: log
+        name: Log linked issues
+        uses: actions/github-script@v6.1.0
+        env:
+          DATA: ${{ steps.query.outputs.data }}
+        with:
+          script: |
+            const { pullRequest } = JSON.parse(process.env.DATA).repository
+            const { edges } = pullRequest.closingIssuesReferences
+
+            const issues = edges.map(edge => edge.node.number)
+
+            for (const issue_number of issues) {
+              const issue = await github.rest.issues.get({
+                ...context.repo,
+                issue_number
+              })
+
+              console.log(issue)
+            }

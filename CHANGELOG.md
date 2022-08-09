@@ -1,3 +1,22 @@
+## [1.0.0-dev.3](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.2...1.0.0-dev.3) (2022-08-09)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** `label-merged-issues` ([13fafa5](https://github.com/flex-development/dist-tag-action/commit/13fafa51a11a6e0625e220468f497540ba2148bc))
+* **workflows:** `query-linked-issues` ([c1aca4d](https://github.com/flex-development/dist-tag-action/commit/c1aca4dcb96ad367a8f0bd571f69b7e0814509c7))
+* **workflows:** fix linked issue querying ([150ba42](https://github.com/flex-development/dist-tag-action/commit/150ba421d5819b9caf2b571b287f417f5324f4bf))
+* **workflows:** improve release workflow ([369a419](https://github.com/flex-development/dist-tag-action/commit/369a419a8b9810e0385ec43ec60e92730d13fa1e))
+* **workflows:** reduce number of `ci` runs ([c07fb9c](https://github.com/flex-development/dist-tag-action/commit/c07fb9c026dd54658c386ce6a4d9b0e5fff9996d))
+
+
+### :house_with_garden: Housekeeping
+
+* set eslint environment to `es2022` ([15ac920](https://github.com/flex-development/dist-tag-action/commit/15ac9200680963b41561b1eabac4c7835e3cb244))
+* standardize `https://docs.github.com` urls ([3e72e39](https://github.com/flex-development/dist-tag-action/commit/3e72e390f0df786a2e55e37d5fb0fbfb5f9dd53e))
+* **pkg:** add keywords `npm-dist-tag` and `npm-publish` ([1b04765](https://github.com/flex-development/dist-tag-action/commit/1b04765840b29bdd8faf780540a59b5c1b78c693))
+* **workflows:** improve reference links ([4d31166](https://github.com/flex-development/dist-tag-action/commit/4d31166cd4e2b68651cbf9d839e124ce78a541e6))
+
 ## [1.0.0-dev.2](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.1...1.0.0-dev.2) (2022-08-09)
 
 

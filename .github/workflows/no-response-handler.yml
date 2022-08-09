@@ -31,4 +31,4 @@ jobs:
             determined.
           daysUntilClose: 7
           responseRequiredLabel: status:awaiting-answers
-          token: ${{ github.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}

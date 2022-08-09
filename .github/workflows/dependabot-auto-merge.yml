@@ -22,4 +22,4 @@ jobs:
           approve: true
           command: squash and merge
           config: .github/dependabot-auto-merge.yml
-          github-token: ${{ secrets.PAT_REPO_ADMIN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}

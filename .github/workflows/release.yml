@@ -136,7 +136,7 @@ jobs:
     needs: metadata
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.PAT_GPR_ADMIN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NOTES_FILE: ./RELEASE_NOTES.md
     strategy:
       matrix:
@@ -192,12 +192,12 @@ jobs:
     name: Cleanup
     needs: [metadata, publish]
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - id: linked-issues
         name: Query linked issues
         uses: octokit/graphql-action@v2.2.22
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
         with:
           query: |
             query (
@@ -247,7 +247,6 @@ jobs:
         name: Close issues with status:released label
         uses: bdougie/close-issues-based-on-label@master
         env:
-          GITHUB_TOKEN: ${{ github.token }}
           LABEL: status:released
       - id: delete-release-branch
         name: Delete branch release/${{ needs.metadata.outputs.version }}

@@ -24,9 +24,9 @@ jobs:
       !github.event.pull_request.merged
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.PAT_GPR_ADMIN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       HUSKY: 0
-      NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_ADMIN }}
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
         node: [16.16.0]

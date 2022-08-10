@@ -252,4 +252,5 @@ jobs:
         uses: dawidd6/action-delete-branch@v3.1.0
         with:
           branches: release/
+          soft_fail: true
           suffix: ${{ needs.metadata.outputs.version }}

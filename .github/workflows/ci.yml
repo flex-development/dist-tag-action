@@ -41,7 +41,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          scope: '@${{ github.repository_owner }}'
       - id: yarn
         name: Install dependencies
         if: github.actor != 'dependabot[bot]'

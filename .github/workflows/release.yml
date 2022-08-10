@@ -42,7 +42,7 @@ jobs:
     name: Metadata
     if: |
       github.event_name == 'workflow_dispatch' ||
-      (startsWith(github.event.pull_request.head.ref, 'release/')
+      (startsWith(github.head_ref, 'release/')
       && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     outputs:
@@ -153,7 +153,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          scope: ${{ needs.metadata.outputs.scope }}
       - id: yarn
         name: Install dependencies
         run: yarn --immutable
@@ -253,5 +252,4 @@ jobs:
         uses: dawidd6/action-delete-branch@v3.1.0
         with:
           branches: release/
-          github_token: ${{ github.token }}
           suffix: ${{ needs.metadata.outputs.version }}

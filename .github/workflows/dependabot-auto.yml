@@ -8,6 +8,9 @@
 # - https://cli.github.com/manual/gh_pr_review
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://docs.github.com/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
+# - https://github.com/actions/checkout
+# - https://github.com/actions/setup-node
+# - https://github.com/dependabot/fetch-metadata
 
 ---
 name: dependabot-auto
@@ -17,7 +20,7 @@ permissions:
   pull-requests: write
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+  PR: ${{ github.event.pull_request.number }}
 jobs:
   dependabot-auto:
     if: github.actor == 'dependabot[bot]'
@@ -25,12 +28,18 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ github.head_ref }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.head_ref }}
+      - id: metadata
+        name: Fetch metadata
+        uses: dependabot/fetch-metadata@v1.3.3
+        with:
+          skip-commit-verification: true
       - id: approve-pr
         name: Approve pull request
-        run: gh pr review $PR_NUMBER --approve
+        run: gh pr review $PR --approve
       - id: enable-auto-merge
         name: Enable auto-merge
-        run: gh pr merge $PR_NUMBER --auto --squash
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        run: gh pr merge $PR --auto --squash

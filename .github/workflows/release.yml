@@ -155,7 +155,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - id: yarn
         name: Install dependencies
-        run: yarn --immutable
+        run: yarn
         env:
           HUSKY: 0
           NODE_AUTH_TOKEN: ${{ env.GITHUB_TOKEN }}

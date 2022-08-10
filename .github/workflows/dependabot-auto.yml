@@ -15,17 +15,22 @@ on: pull_request
 permissions:
   contents: write
   pull-requests: write
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
   dependabot-auto:
     if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
+      - id: checkout
+        name: Checkout ${{ github.head_ref }}
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
       - id: approve-pr
         name: Approve pull request
         run: gh pr review $PR_NUMBER --approve
       - id: enable-auto-merge
         name: Enable auto-merge
-        run: gh pr merge $PR_NUMBER --auto --delete-branch --squash
+        run: gh pr merge $PR_NUMBER --auto --squash

@@ -5,6 +5,8 @@
 # - https://docs.github.com/actions/guides/building-and-testing-nodejs
 # - https://docs.github.com/actions/learn-github-actions/contexts#github-context
 # - https://docs.github.com/actions/learn-github-actions/expressions
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
 # - https://github.com/actions/checkout
 # - https://github.com/actions/setup-node
 
@@ -12,16 +14,9 @@
 name: continuous-integration
 on:
   pull_request:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 jobs:
   ci:
-    if: |
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')) ||
-      !github.event.pull_request.merged
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

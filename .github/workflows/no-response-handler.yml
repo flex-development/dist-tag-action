@@ -12,7 +12,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    # Schedule for five minutes after the hour, every hour
+    # schedule for five minutes after the hour, every hour
     - cron: '5 * * * *'
 jobs:
   close-issues:

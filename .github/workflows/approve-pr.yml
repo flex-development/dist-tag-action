@@ -17,15 +17,15 @@ on:
       - review_requested
 permissions:
   pull-requests: write
+env:
+  GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
+  PR: ${{ github.event.pull_request.number }}
 jobs:
   approve-pr:
     if: github.event.requested_reviewer == 'flexdevelopment'
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
-      PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - id: approve
         name: Approve pull request
         if: github.actor == 'unicornware'
-        run: gh pr review $PR_NUMBER --approve --body "lgtm 👍🏾"
+        run: gh pr review $PR --approve --body "lgtm 👍🏾"

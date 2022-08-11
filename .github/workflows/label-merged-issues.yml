@@ -5,8 +5,6 @@
 #
 # References:
 #
-# - https://docs.github.com/actions/learn-github-actions/contexts#github-context
-# - https://docs.github.com/actions/learn-github-actions/expressions
 # - https://docs.github.com/graphql/reference/objects#pullrequest
 # - https://github.com/actions/github-script
 # - https://github.com/octokit/graphql-action
@@ -24,6 +22,8 @@ on:
       pr:
         description: pull request number
         required: true
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   label-merged-issues:
     if: |
@@ -43,8 +43,6 @@ jobs:
         name: Query linked issues
         if: steps.pr.outputs.result != 0
         uses: octokit/graphql-action@v2.2.22
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           query: |
             query (

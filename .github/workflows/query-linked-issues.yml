@@ -19,6 +19,8 @@ on:
       pr:
         description: pull request number
         required: true
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   query-linked-issues:
     runs-on: ubuntu-latest
@@ -26,8 +28,6 @@ jobs:
       - id: query
         name: Query linked issues
         uses: octokit/graphql-action@v2.2.22
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           query: |
             query (

@@ -1,57 +1,53 @@
 # Release
 #
-# Publish GitHub release when a `release/*` branch is merged into `main` or on
-# workflow dispatch.
+# Publish GitHub release when a `release/*` branch pull request is approved or
+# on workflow dispatch.
 #
 # References:
 #
+# - https://cli.github.com/manual/gh_pr_merge
 # - https://cli.github.com/manual/gh_release_create
-# - https://docs.github.com/actions/learn-github-actions/contexts#github-context
-# - https://docs.github.com/actions/learn-github-actions/expressions
-# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
-# - https://docs.github.com/ctions/using-workflows/using-github-cli-in-workflows
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request_review
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+# - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
 # - https://github.com/actions/checkout
 # - https://github.com/actions/github-script
 # - https://github.com/actions/setup-node
 # - https://github.com/bdougie/close-issues-based-on-label
-# - https://github.com/dawidd6/action-delete-branch
 # - https://github.com/octokit/graphql-action
-# - https://github.com/rickstaa/action-create-tag
 
 ---
 name: release
 on:
-  pull_request:
+  pull_request_review:
     branches:
-      - main
+      - release/*
     types:
-      - closed
+      - submitted
   workflow_dispatch:
     inputs:
       pr:
         description: pull request number
         required: true
       ref:
-        description: commit to checkout
+        description: full commit sha
         required: true
       version:
         description: project version
         required: true
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REF: ${{ github.event.inputs.ref || github.event.pull_request.head.ref }}
 jobs:
   metadata:
     name: Metadata
     if: |
       github.event_name == 'workflow_dispatch' ||
-      (startsWith(github.head_ref, 'release/')
-      && github.event.pull_request.merged == true)
+      github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     outputs:
       artifact-path: ${{ steps.artifact.outputs.result }}
-      message: ${{ steps.version.outputs.message }}
-      pr: ${{ steps.pr.outputs.result }}
       prerelease: ${{ steps.prerelease.outputs.result }}
-      ref: ${{ steps.ref.outputs.result }}
-      scope: ${{ steps.workspace.outputs.scope }}
       tag: ${{ steps.version.outputs.tag }}
       version: ${{ steps.version.outputs.version }}
     steps:
@@ -60,26 +56,12 @@ jobs:
         uses: actions/checkout@v3.0.2
         with:
           ref: main
-      - id: workspace
-        name: Get workspace
-        uses: actions/github-script@v6.1.0
-        with:
-          script: |
-            const scope = `@${context.repo.owner}`
-
-            core.setOutput('scope', scope)
-            core.setOutput('workspace', `${scope}/${context.repo.repo}`)
       - id: version
-        name: Get version
+        name: Get version and tag
         uses: actions/github-script@v6.1.0
-        env:
-          WORKSPACE: ${{ steps.workspace.outputs.workspace }}
         with:
           script: |
-            const { payload, repo } = context
-            const { inputs, pull_request } = payload
-
-            const workspace = process.env.WORKSPACE
+            const { inputs, pull_request } = context.payload
 
             let version
 
@@ -89,19 +71,17 @@ jobs:
 
             if (inputs) version = inputs.version
 
-            core.setOutput('message', `release: ${workspace}@${version}`)
             core.setOutput('tag', version)
             core.setOutput('version', version)
       - id: artifact
         name: Get artifact path
         uses: actions/github-script@v6.1.0
         env:
-          WORKSPACE: ${{ steps.workspace.outputs.workspace }}
           VERSION: ${{ steps.version.outputs.version }}
         with:
           result-encoding: string
           script: |
-            const workspace = process.env.WORKSPACE
+            const workspace = `@${context.payload.repository.full_name}`
             const version = process.env.VERSION
 
             return `./${workspace.replace('/', '-')}-${version}.tgz`
@@ -118,38 +98,30 @@ jobs:
         with:
           # todo: calculate number of prereleases to include in release notes
           script: return !!process.env.DIST_TAG
-      - id: pr
-        name: Get pull request number
-        uses: actions/github-script@v6.1.0
-        with:
-          script: |
-            const { inputs, pull_request } = context.payload
-            return Number.parseInt(inputs?.pr ?? pull_request?.number ?? '0')
-      - id: ref
-        name: Get checkout ref
-        uses: actions/github-script@v6.1.0
-        with:
-          result-encoding: string
-          script: return context.payload.inputs?.ref ?? 'main'
   publish:
     name: Publish GitHub release
     needs: metadata
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url:
+        ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{
+        needs.metadata.outputs.tag }}
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NOTES_FILE: ./RELEASE_NOTES.md
+      TAG: ${{ needs.metadata.outputs.tag }}
     strategy:
       matrix:
         node: [16.16.0]
     steps:
       - id: checkout
-        name: Checkout ${{ needs.metadata.outputs.ref }}
+        name: Checkout ${{ env.REF }}
         uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.metadata.outputs.ref }}
+          ref: ${{ env.REF }}
       - id: setup-node
-        name: Use Node.js ${{ matrix.node }}
+        name: Use node v${{ matrix.node }}
         uses: actions/setup-node@v3.4.1
         with:
           node-version: ${{ matrix.node }}
@@ -173,27 +145,49 @@ jobs:
         env:
           TS_NODE_PROJECT: ./tsconfig.tsnode.json
       - id: tag
-        name: Create and push new tag
-        uses: rickstaa/action-create-tag@v1.3.7
+        name: Create annotated tag
+        uses: actions/github-script@v6.1.0
         with:
-          force_push_tag: true
-          message: ${{ needs.metadata.outputs.message }}
-          tag: ${{ needs.metadata.outputs.tag }}
+          script: |
+            const endpoint = '/repos/{owner}/{repo}/git/commits/{commit_sha}'
+
+            const commit = await github.request(`GET ${endpoint}`, {
+              ...context.repo,
+              commit_sha: process.env.GITHUB_SHA
+            })
+
+            const tag = await github.rest.git.createTag({
+              ...context.repo,
+              message: commit.message,
+              object: commit.sha,
+              tag: process.env.TAG,
+              tagger: commit.committer,
+              type: 'commit'
+            })
+
+            await github.rest.git.createRef({
+              ...context.repo,
+              ref: `refs/tags/${process.env.TAG}`,
+              sha: tag.data.sha
+            })
       - id: publish
-        name: Create and publish release
+        name: Publish release
         run: gh release create $TAG $ASSET -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
         env:
           ASSET: ${{ needs.metadata.outputs.artifact-path }}
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
-          TAG: ${{ needs.metadata.outputs.tag }}
   cleanup:
     name: Cleanup
     needs: [metadata, publish]
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR: ${{ github.event.inputs.pr || github.event.pull_request.number }}
     steps:
+      - id: checkout
+        name: Checkout ${{ env.REF }}
+        uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ env.REF }}
       - id: linked-issues
         name: Query linked issues
         uses: octokit/graphql-action@v2.2.22
@@ -221,7 +215,7 @@ jobs:
               }
             }
           owner: ${{ github.repository_owner }}
-          pr: ${{ needs.metadata.outputs.pr }}
+          pr: ${{ env.PR }}
           repo: ${{ github.event.repository.name }}
       - id: label-linked-issues
         name: Add status:released label to linked issues
@@ -247,10 +241,9 @@ jobs:
         uses: bdougie/close-issues-based-on-label@master
         env:
           LABEL: status:released
-      - id: delete-release-branch
-        name: Delete branch release/${{ needs.metadata.outputs.version }}
-        uses: dawidd6/action-delete-branch@v3.1.0
-        with:
-          branches: release/
-          soft_fail: true
-          suffix: ${{ needs.metadata.outputs.version }}
+      - id: enable-auto-merge
+        name: Enable auto-merge
+        if: github.event_name != 'workflow_dispatch'
+        run: gh pr merge $PR --auto --delete-branch --squash
+        env:
+          PR: ${{ env.PR }}

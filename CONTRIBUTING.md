@@ -357,7 +357,7 @@ Before releasing, the following steps must be completed:
    - after review, `squash and merge` PR
      - `release: @flex-development/dist-tag-action@<new-version> (#pull-request-n)`
        - e.g: `release: @flex-development/dist-tag-action@1.1.0 (#3)`
-   - once PR is merged, release workflow will be triggered
+   - release workflow will start when PR is approved
    - PR reviewer should make sure workflow completes all jobs successfully
      - if successful, the workflow will:
        - pack project
@@ -365,7 +365,7 @@ Before releasing, the following steps must be completed:
        - create and publish github release
        - add the `status:released` label to all linked issues
        - make sure all issues with the `status:released` label are closed
-       - delete the release branch
+       - enable auto-merge for the release branch
 
 [1]: https://brew.sh
 [2]:

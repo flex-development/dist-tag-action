@@ -3,14 +3,27 @@
 name: action-test
 on:
   pull_request:
+    paths:
+      - .github/workflows/action-test.yml
+      - build.config.ts
+      - dist/main.mjs
+      - src/run.ts
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/action-test.yml
+      - build.config.ts
+      - dist/main.mjs
+      - src/run.ts
   workflow_dispatch:
 env:
   STABLE: 2.0.0
   UNSTABLE: 2.0.0-alpha.1
   UNSTABLE_DELIMITED: foo-package@2.0.0-beta.1
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   action-test:
     runs-on: ubuntu-latest

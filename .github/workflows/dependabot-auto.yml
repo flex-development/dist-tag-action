@@ -44,8 +44,7 @@ jobs:
         name: Checkout ${{ github.head_ref }}
         uses: actions/checkout@v3.0.2
         with:
-          persist-credentials:
-            ${{ steps.metadata.outputs.package-ecosystem == 'npm' }}
+          persist-credentials: ${{ steps.metadata.outputs.package-ecosystem == 'npm' }}
           ref: ${{ github.head_ref }}
       - id: fix-yarn-lock
         name: Fix yarn.lock

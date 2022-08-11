@@ -37,7 +37,5 @@ jobs:
           ref: ${{ github.head_ref }}
       - id: approve
         name: Approve pull request
-        if:
-          github.event.requested_reviewer == 'flexdevelopment' && github.actor
-          == 'unicornware'
+        if: github.event.requested_reviewer == 'flexdevelopment' && github.actor == 'unicornware'
         run: gh pr review ${{ github.event.number }} --approve --body 'lgtm 👍🏾'

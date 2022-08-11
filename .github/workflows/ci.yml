@@ -2,9 +2,6 @@
 #
 # References:
 #
-# - https://docs.github.com/actions/guides/building-and-testing-nodejs
-# - https://docs.github.com/actions/learn-github-actions/contexts#github-context
-# - https://docs.github.com/actions/learn-github-actions/expressions
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
 # - https://github.com/actions/checkout
@@ -15,29 +12,35 @@ name: continuous-integration
 on:
   pull_request:
   workflow_dispatch:
+permissions:
+  packages: read
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  HUSKY: 0
+  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REF: ${{ github.head_ref || github.ref_name }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ci:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      HUSKY: 0
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
         node: [16.16.0]
     steps:
       - id: checkout
-        name: Checkout branch
+        name: Checkout ${{ env.REF }}
         uses: actions/checkout@v3.0.2
         with:
-          ref: ${{ github.head_ref }}
+          persist-credentials: false
+          ref: ${{ env.REF }}
       - id: setup-node
-        name: Use Node.js ${{ matrix.node }}
+        name: Use node v${{ matrix.node }}
         uses: actions/setup-node@v3.4.1
         with:
+          cache: yarn
+          cache-dependency-path: yarn.lock
           node-version: ${{ matrix.node }}
       - id: yarn
         name: Install dependencies

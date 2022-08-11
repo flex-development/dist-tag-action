@@ -57,7 +57,7 @@ jobs:
     steps:
       - id: checkout
         name: Checkout main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
         with:
           ref: main
       - id: workspace
@@ -144,7 +144,7 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ needs.metadata.outputs.ref }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
           ref: ${{ needs.metadata.outputs.ref }}

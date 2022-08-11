@@ -18,7 +18,7 @@ jobs:
     steps:
       - id: checkout
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
       - id: sync
         name: Sync labels
         uses: micnncim/action-label-syncer@v1.3.0

@@ -1,7 +1,7 @@
 # Label Merged Issues
 #
-# Add the `status:merged` label to a pull request's linked issues when a pull
-# request is merged into `main` or on workflow dispatch.
+# Add the `status:merged` label to a pull request's linked issues when a pull request is merged into
+# `main` or on workflow dispatch.
 #
 # References:
 #

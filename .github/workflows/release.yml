@@ -1,7 +1,6 @@
 # Release
 #
-# Publish GitHub release when a `release/*` branch pull request is approved or
-# on workflow dispatch.
+# Publish GitHub release when a `release/*` branch pull request is approved or on workflow dispatch.
 #
 # References:
 #

@@ -2,10 +2,10 @@
 #
 # Automatically approve Dependabot pull requests and enable auto-merge.
 #
-# Note: @dependabot generates Yarn v1 lockfiles even though this project uses a
-# different version of Yarn. This breaks the project lockfile. A workaround has
-# been implemented to autofix lockfiles and deduplicate dependencies. It should
-# be when https://github.com/dependabot/dependabot-core/issues/1297 is resolved.
+# Note: @dependabot generates Yarn v1 lockfiles despite this project using a different Yarn version.
+# This breaks the project lockfile. A workaround has been implemented to autofix lockfiles and
+# deduplicate dependencies. See https://github.com/dependabot/dependabot-core/issues/1297 to check
+# if the workaround is safe to remove.
 #
 # References:
 #
@@ -64,7 +64,7 @@ jobs:
           git config --global user.email '49699333+${{ github.actor }}@users.noreply.github.com'
           git add yarn.lock
           git status
-          git diff-index --quiet HEAD || (git commit -m "chore(yarn): fix lockfile" && git push -u origin HEAD)
+          git diff-index --quiet HEAD || (git commit -m "chore(yarn): fix lockfile" && git push -f
       - id: approve-pr
         name: Approve pull request
         run: gh pr review $PR --approve

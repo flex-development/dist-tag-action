@@ -19,6 +19,7 @@ const config: UserConfig = {
       'always',
       [
         'action',
+        'deps',
         'deps-dev',
         'github',
         'helpers',

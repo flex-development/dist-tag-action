@@ -8,6 +8,7 @@
 #
 # - https://cli.github.com/manual/gh_pr_review
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+# - https://github.com/actions/checkout
 
 ---
 name: approve-pr
@@ -24,6 +25,12 @@ jobs:
     if: github.event.requested_reviewer == 'flexdevelopment'
     runs-on: ubuntu-latest
     steps:
+      - id: checkout
+        name: Checkout ${{ github.head_ref }}
+        uses: actions/checkout@v3.0.2
+        with:
+          persist-credentials: false
+          ref: ${{ github.head_ref }}
       - id: approve
         name: Approve pull request
         if: github.actor == 'unicornware'

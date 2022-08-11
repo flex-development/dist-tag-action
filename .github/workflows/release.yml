@@ -150,7 +150,7 @@ jobs:
           ref: ${{ needs.metadata.outputs.ref }}
       - id: setup-node
         name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.4.1
         with:
           node-version: ${{ matrix.node }}
       - id: yarn

@@ -26,6 +26,7 @@ lcov
 lintstagedrc
 micnncim
 nocheck
+noreply
 npmjs
 npmrc
 nums

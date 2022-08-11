@@ -19,7 +19,6 @@ permissions:
   pull-requests: write
 env:
   GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
-  PR: ${{ github.event.pull_request.number }}
 jobs:
   approve-pr:
     if: github.event.requested_reviewer == 'flexdevelopment'
@@ -28,4 +27,4 @@ jobs:
       - id: approve
         name: Approve pull request
         if: github.actor == 'unicornware'
-        run: gh pr review $PR --approve --body "lgtm 👍🏾"
+        run: gh pr review ${{ github.event.number }} --approve --body 'lgtm 👍🏾'

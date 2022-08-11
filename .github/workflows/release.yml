@@ -180,7 +180,7 @@ jobs:
     needs: [metadata, publish]
     runs-on: ubuntu-latest
     env:
-      PR: ${{ github.event.inputs.pr || github.event.pull_request.number }}
+      PR: ${{ github.event.inputs.pr || github.event.number }}
     steps:
       - id: checkout
         name: Checkout ${{ env.REF }}
@@ -244,5 +244,3 @@ jobs:
         name: Enable auto-merge
         if: github.event_name != 'workflow_dispatch'
         run: gh pr merge $PR --auto --delete-branch --squash
-        env:
-          PR: ${{ env.PR }}

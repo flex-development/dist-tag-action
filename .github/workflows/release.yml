@@ -39,7 +39,6 @@ env:
   REF: ${{ github.event.inputs.ref || github.event.pull_request.head.ref }}
 jobs:
   metadata:
-    name: Metadata
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event.review.state == 'approved'
@@ -98,7 +97,6 @@ jobs:
           # todo: calculate number of prereleases to include in release notes
           script: return !!process.env.DIST_TAG
   publish:
-    name: Publish GitHub release
     needs: metadata
     runs-on: ubuntu-latest
     environment:
@@ -176,7 +174,6 @@ jobs:
           ASSET: ${{ needs.metadata.outputs.artifact-path }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
   cleanup:
-    name: Cleanup
     needs: [metadata, publish]
     runs-on: ubuntu-latest
     env:

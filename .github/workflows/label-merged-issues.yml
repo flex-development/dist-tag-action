@@ -28,29 +28,15 @@ jobs:
   label-merged-issues:
     if: |
       github.event_name == 'workflow_dispatch' ||
-      github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'release/') == false
+      (github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release/'))
     runs-on: ubuntu-latest
     steps:
-      - id: pr
-        name: Get pull request number
-        uses: actions/github-script@v6.1.0
-        with:
-          script: |
-            const { inputs, pull_request } = context.payload
-            return Number.parseInt(inputs?.pr ?? pull_request?.number ?? '0')
       - id: query
         name: Query linked issues
-        if: steps.pr.outputs.result != 0
         uses: octokit/graphql-action@v2.2.22
         with:
           query: |
-            query (
-              $owner: String!,
-              $repo: String!,
-              $pr: Int!,
-              $limit: Int = 20
-            ) {
+            query ($owner: String!, $repo: String!, $pr: Int!, $limit: Int = 20) {
               repository(owner: $owner, name: $repo) {
                 pullRequest(number: $pr) {
                   closingIssuesReferences(
@@ -67,11 +53,10 @@ jobs:
               }
             }
           owner: ${{ github.repository_owner }}
-          pr: ${{ steps.pr.outputs.result }}
+          pr: ${{ github.event.inputs.pr || github.event.number }}
           repo: ${{ github.event.repository.name }}
       - id: label
         name: Add status:merged label to linked issues
-        if: steps.pr.outputs.result != 0
         uses: actions/github-script@v6.1.0
         env:
           DATA: ${{ steps.query.outputs.data }}
@@ -89,5 +74,5 @@ jobs:
                 labels: ['status:merged']
               })
 
-              console.log(`added status:merged label to #${issue_number}`)
+              console.log(`added 'status:merged' label to #${issue_number}`)
             }

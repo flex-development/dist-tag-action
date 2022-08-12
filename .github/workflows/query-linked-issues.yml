@@ -30,12 +30,7 @@ jobs:
         uses: octokit/graphql-action@v2.2.22
         with:
           query: |
-            query (
-              $owner: String!,
-              $repo: String!,
-              $pr: Int!,
-              $limit: Int = 20
-            ) {
+            query ($owner: String!, $repo: String!, $pr: Int!, $limit: Int = 20) {
               repository(owner: $owner, name: $repo) {
                 pullRequest(number: $pr) {
                   closingIssuesReferences(
@@ -68,10 +63,5 @@ jobs:
             const issues = edges.map(edge => edge.node.number)
 
             for (const issue_number of issues) {
-              const issue = await github.rest.issues.get({
-                ...context.repo,
-                issue_number
-              })
-
-              console.log(issue)
+              console.log(await github.rest.issues.get({ ...context.repo, issue_number }))
             }

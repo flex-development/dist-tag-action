@@ -39,9 +39,7 @@ env:
   REF: ${{ github.event.inputs.ref || github.event.pull_request.head.ref }}
 jobs:
   metadata:
-    if: |
-      github.event_name == 'workflow_dispatch' ||
-      github.event.review.state == 'approved'
+    if: github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     outputs:
       artifact-path: ${{ steps.artifact.outputs.result }}
@@ -61,13 +59,7 @@ jobs:
           script: |
             const { inputs, pull_request } = context.payload
 
-            let version
-
-            if (pull_request) {
-              version = pull_request.head.ref.split('release/')[1]
-            }
-
-            if (inputs) version = inputs.version
+            const version = inputs?.version ?? pull_request.head.ref.split('release/')[1]
 
             core.setOutput('tag', version)
             core.setOutput('version', version)
@@ -189,12 +181,7 @@ jobs:
         uses: octokit/graphql-action@v2.2.22
         with:
           query: |
-            query (
-              $owner: String!,
-              $repo: String!,
-              $pr: Int!,
-              $limit: Int = 20
-            ) {
+            query ($owner: String!, $repo: String!, $pr: Int!, $limit: Int = 20) {
               repository(owner: $owner, name: $repo) {
                 pullRequest(number: $pr) {
                   closingIssuesReferences(

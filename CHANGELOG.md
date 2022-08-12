@@ -1,3 +1,10 @@
+## [1.0.0-dev.6](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.5...1.0.0-dev.6) (2022-08-12)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** revert back to releasing on pr merge ([afb0100](https://github.com/flex-development/dist-tag-action/commit/afb01004f87e670d7a957e73e6374e106b72f30f))
+
 ## [1.0.0-dev.5](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.4...1.0.0-dev.5) (2022-08-12)
 
 

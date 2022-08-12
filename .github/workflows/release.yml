@@ -166,6 +166,7 @@ jobs:
         run: gh release create $TAG $ASSET -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
         env:
           ASSET: ${{ needs.metadata.outputs.artifact-path }}
+          GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
   cleanup:
     needs: [metadata, publish]

@@ -1,28 +1,28 @@
 # Release
 #
-# Publish GitHub release when a `release/*` branch pull request is approved or on workflow dispatch.
+# Publish GitHub release when a `release/*` branch is merged into `main` or on workflow dispatch.
 #
 # References:
 #
-# - https://cli.github.com/manual/gh_pr_merge
 # - https://cli.github.com/manual/gh_release_create
-# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request_review
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
 # - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
 # - https://github.com/actions/checkout
 # - https://github.com/actions/github-script
 # - https://github.com/actions/setup-node
 # - https://github.com/bdougie/close-issues-based-on-label
+# - https://github.com/dawidd6/action-delete-branch
 # - https://github.com/octokit/graphql-action
 
 ---
 name: release
 on:
-  pull_request_review:
+  pull_request:
     branches:
-      - release/*
+      - main
     types:
-      - submitted
+      - closed
   workflow_dispatch:
     inputs:
       pr:
@@ -34,15 +34,20 @@ on:
       version:
         description: project version
         required: true
+permissions:
+  contents: write
+  issues: write
+  packages: read
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  REF: ${{ github.event.inputs.ref || github.event.pull_request.head.ref }}
 jobs:
   metadata:
-    if: github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved'
+    if:
+      github.event_name == 'workflow_dispatch' || (startsWith(github.head_ref, 'release/') &&
+      github.event.pull_request.merged)
     runs-on: ubuntu-latest
     outputs:
-      artifact-path: ${{ steps.artifact.outputs.result }}
+      artifact: ${{ steps.artifact.outputs.result }}
       prerelease: ${{ steps.prerelease.outputs.result }}
       tag: ${{ steps.version.outputs.tag }}
       version: ${{ steps.version.outputs.version }}
@@ -94,10 +99,11 @@ jobs:
     environment:
       name: production
       url:
-        ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{
-        needs.metadata.outputs.tag }}
+        ${{ format('{0}/{1}/releases/tag/{2}', github.server_url, github.repository,
+        needs.metadata.outputs.tag) }}
     env:
       NOTES_FILE: ./RELEASE_NOTES.md
+      REF: ${{ github.event.inputs.ref || github.head_ref }}
       TAG: ${{ needs.metadata.outputs.tag }}
     strategy:
       matrix:
@@ -136,6 +142,8 @@ jobs:
       - id: tag
         name: Create annotated tag
         uses: actions/github-script@v6.1.0
+        env:
+          VERSION: ${{ needs.metadata.outputs.version }}
         with:
           script: |
             const commit = await github.request('GET /repos/{owner}/{repo}/commits/{ref}', {
@@ -147,7 +155,7 @@ jobs:
 
             const tag = await github.rest.git.createTag({
               ...context.repo,
-              message: commit.data.commit.message,
+              message: `release: @${context.payload.repository.full_name}@${process.env.VERSION}`,
               object: commit.data.sha,
               tag: process.env.TAG,
               tagger: commit.data.commit.committer,
@@ -165,22 +173,14 @@ jobs:
         name: Publish release
         run: gh release create $TAG $ASSET -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
         env:
-          ASSET: ${{ needs.metadata.outputs.artifact-path }}
+          ASSET: ${{ needs.metadata.outputs.artifact }}
           GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
   cleanup:
     needs: [metadata, publish]
     runs-on: ubuntu-latest
-    env:
-      PR: ${{ github.event.inputs.pr || github.event.pull_request.number }}
     steps:
-      - id: checkout
-        name: Checkout ${{ env.REF }}
-        uses: actions/checkout@v3.0.2
-        with:
-          fetch-depth: 0
-          ref: ${{ env.REF }}
-      - id: linked-issues
+      - id: query-linked-issues
         name: Query linked issues
         uses: octokit/graphql-action@v2.2.22
         with:
@@ -202,19 +202,18 @@ jobs:
               }
             }
           owner: ${{ github.repository_owner }}
-          pr: ${{ env.PR }}
+          pr: ${{ github.event.inputs.pr || github.event.number }}
           repo: ${{ github.event.repository.name }}
       - id: label-linked-issues
         name: Add status:released label to linked issues
         uses: actions/github-script@v6.1.0
         env:
-          DATA: ${{ steps.linked-issues.outputs.data }}
+          DATA: ${{ steps.query-linked-issues.outputs.data }}
         with:
           script: |
-            const { pullRequest } = JSON.parse(process.env.DATA).repository
-            const { edges } = pullRequest.closingIssuesReferences
+            const { closingIssuesReferences } = JSON.parse(process.env.DATA).repository.pullRequest
 
-            const issues = edges.map(edge => edge.node.number)
+            const issues = closingIssuesReferences.edges.map(edge => edge.node.number)
 
             for (const issue_number of issues) {
               await github.rest.issues.addLabels({
@@ -228,7 +227,10 @@ jobs:
         uses: bdougie/close-issues-based-on-label@master
         env:
           LABEL: status:released
-      - id: enable-auto-merge
-        name: Enable auto-merge
-        if: github.event_name != 'workflow_dispatch'
-        run: gh pr merge $PR --auto --delete-branch --squash
+      - id: delete-release-branch
+        name: Delete release/${{ needs.metadata.outputs.version }}
+        uses: dawidd6/action-delete-branch@v3.1.0
+        with:
+          branches: release/
+          soft_fail: true
+          suffix: ${{ needs.metadata.outputs.version }}

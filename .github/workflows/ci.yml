@@ -3,6 +3,7 @@
 # References:
 #
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#push
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
 # - https://github.com/actions/checkout
 
@@ -10,6 +11,7 @@
 name: continuous-integration
 on:
   pull_request:
+  push:
   workflow_dispatch:
 permissions:
   packages: read
@@ -23,6 +25,9 @@ concurrency:
   cancel-in-progress: true
 jobs:
   ci:
+    if: |
+      github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' ||
+      !startsWith(github.event.head_commit.message, format('release: @{0}', github.repository))
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -10,7 +10,6 @@
 # - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
 # - https://github.com/actions/checkout
 # - https://github.com/actions/github-script
-# - https://github.com/actions/setup-node
 # - https://github.com/bdougie/close-issues-based-on-label
 # - https://github.com/dawidd6/action-delete-branch
 # - https://github.com/octokit/graphql-action
@@ -105,9 +104,6 @@ jobs:
       NOTES_FILE: ./RELEASE_NOTES.md
       REF: ${{ github.event.inputs.ref || github.head_ref }}
       TAG: ${{ needs.metadata.outputs.tag }}
-    strategy:
-      matrix:
-        node: [16.16.0]
     steps:
       - id: checkout
         name: Checkout ${{ env.REF }}
@@ -115,11 +111,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ env.REF }}
-      - id: setup-node
-        name: Use node v${{ matrix.node }}
-        uses: actions/setup-node@v3.4.1
-        with:
-          node-version: ${{ matrix.node }}
       - id: yarn
         name: Install dependencies
         run: yarn

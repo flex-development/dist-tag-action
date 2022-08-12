@@ -138,21 +138,23 @@ jobs:
         uses: actions/github-script@v6.1.0
         with:
           script: |
-            const endpoint = '/repos/{owner}/{repo}/git/commits/{commit_sha}'
-
-            const commit = await github.request(`GET ${endpoint}`, {
+            const commit = await github.request('GET /repos/{owner}/{repo}/commits/{ref}', {
               ...context.repo,
-              commit_sha: process.env.GITHUB_SHA
+              ref: context.payload.inputs?.ref ?? context.payload.pull_request.head.sha
             })
+
+            console.log('commit', commit.data)
 
             const tag = await github.rest.git.createTag({
               ...context.repo,
-              message: commit.message,
-              object: commit.sha,
+              message: commit.data.commit.message,
+              object: commit.data.sha,
               tag: process.env.TAG,
-              tagger: commit.committer,
+              tagger: commit.data.commit.committer,
               type: 'commit'
             })
+
+            console.log('tag', tag.data)
 
             await github.rest.git.createRef({
               ...context.repo,

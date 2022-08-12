@@ -1,3 +1,12 @@
+## [1.0.0-dev.5](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.4...1.0.0-dev.5) (2022-08-12)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** fix `'origin/main' is not a commit ...` ([78ad6b0](https://github.com/flex-development/dist-tag-action/commit/78ad6b0105e1fe3d1fe263ca4f62e9330bd0e818))
+* **workflows:** publish releases from repo admin account ([4150a9f](https://github.com/flex-development/dist-tag-action/commit/4150a9fde92e55f4e1747b7e128c97685b72688f))
+* **workflows:** use `merge_commit_sha` to create annotated tags ([de2b7dd](https://github.com/flex-development/dist-tag-action/commit/de2b7ddeb0d24e7dcfb5f14b777d8da92464abe2))
+
 ## [1.0.0-dev.4](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.3...1.0.0-dev.4) (2022-08-12)
 
 

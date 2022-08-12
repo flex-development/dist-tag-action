@@ -17,8 +17,6 @@ on:
   pull_request:
     types:
       - review_requested
-permissions:
-  pull-requests: write
 env:
   GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
 jobs:

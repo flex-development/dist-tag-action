@@ -177,6 +177,7 @@ jobs:
         name: Checkout ${{ env.REF }}
         uses: actions/checkout@v3.0.2
         with:
+          fetch-depth: 0
           ref: ${{ env.REF }}
       - id: linked-issues
         name: Query linked issues

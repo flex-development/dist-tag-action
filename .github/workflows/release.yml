@@ -140,7 +140,7 @@ jobs:
           script: |
             const commit = await github.request('GET /repos/{owner}/{repo}/commits/{ref}', {
               ...context.repo,
-              ref: context.payload.inputs?.ref ?? context.payload.pull_request.head.sha
+              ref: context.payload.inputs?.ref ?? context.payload.pull_request.merge_commit_sha
             })
 
             console.log('commit', commit.data)

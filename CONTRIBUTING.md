@@ -357,7 +357,7 @@ Before releasing, the following steps must be completed:
    - after review, `squash and merge` PR
      - `release: @flex-development/dist-tag-action@<new-version> (#pull-request-n)`
        - e.g: `release: @flex-development/dist-tag-action@1.1.0 (#3)`
-   - release workflow will start when PR is approved
+   - release workflow will start when PR is merged
    - PR reviewer should make sure workflow completes all jobs successfully
      - if successful, the workflow will:
        - pack project

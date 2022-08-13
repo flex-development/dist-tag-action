@@ -1,5 +1,6 @@
 # dist-tag-action
 
+[![action-test](https://github.com/flex-development/dist-tag-action/actions/workflows/action-test.yml/badge.svg)](https://github.com/flex-development/dist-tag-action/actions/workflows/action-test.yml)
 [![conventional commits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![license](https://img.shields.io/github/license/flex-development/dist-tag-action.svg)](LICENSE.md)

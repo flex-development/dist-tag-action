@@ -30,9 +30,6 @@ on:
       ref:
         description: full commit sha
         required: true
-      version:
-        description: project version
-        required: true
 permissions:
   contents: write
   issues: write

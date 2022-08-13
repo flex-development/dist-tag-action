@@ -12,8 +12,8 @@
 # 8. push release branch to origin
 # 9. cleanup
 
-yarn test
-yarn pack
+yarn test:cov
+yarn pack -o %s-%v.tgz
 VERSION=$(jq .version package.json -r)
 RELEASE_BRANCH=release/$VERSION
 git switch -c $RELEASE_BRANCH

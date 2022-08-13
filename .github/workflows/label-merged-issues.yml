@@ -28,7 +28,7 @@ jobs:
   label-merged-issues:
     if: |
       github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release/'))
+      (github.event.pull_request.merged && !startsWith(github.head_ref, 'release/'))
     runs-on: ubuntu-latest
     steps:
       - id: query
@@ -62,10 +62,9 @@ jobs:
           DATA: ${{ steps.query.outputs.data }}
         with:
           script: |
-            const { pullRequest } = JSON.parse(process.env.DATA).repository
-            const { edges } = pullRequest.closingIssuesReferences
+            const { closingIssuesReferences } = JSON.parse(process.env.DATA).repository.pullRequest
 
-            const issues = edges.map(edge => edge.node.number)
+            const issues = closingIssuesReferences.edges.map(edge => edge.node.number)
 
             for (const issue_number of issues) {
               await github.rest.issues.addLabels({

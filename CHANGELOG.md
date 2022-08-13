@@ -1,3 +1,19 @@
+## [1.0.0-dev.9](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.8...1.0.0-dev.9) (2022-08-13)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** close inactionable issues after `14` days ([55aa7ba](https://github.com/flex-development/dist-tag-action/commit/55aa7bae11f64699cd64150b1a7726f340dbe8c3))
+* **workflows:** lock inactive threads after `60` days ([3d86d98](https://github.com/flex-development/dist-tag-action/commit/3d86d98c4fa14333d20cc4ebce148646ce87cfdd))
+* **workflows:** remove `debug` step from `approve-pr` ([e2a3a27](https://github.com/flex-development/dist-tag-action/commit/e2a3a2767c510fa6ce8d7bfd790584f72b9bb3ae))
+* **workflows:** set `label-merged-issues.permissions` ([3130fbd](https://github.com/flex-development/dist-tag-action/commit/3130fbdc4225f93c41801659a8f5ce3601b93c25))
+* **workflows:** set `query-linked-issues.permissions` ([0972329](https://github.com/flex-development/dist-tag-action/commit/09723291adf1570141bb2c973662e565d41ae6f2))
+
+
+### :pencil: Documentation
+
+* fix permissions in "publish github release" example ([40087a9](https://github.com/flex-development/dist-tag-action/commit/40087a94dab30230be4a351e0df45dff68ff390b))
+
 ## [1.0.0-dev.8](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.7...1.0.0-dev.8) (2022-08-13)
 
 

@@ -1,3 +1,23 @@
+## [1.0.0](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.9...1.0.0) (2022-08-13)
+
+
+### :pencil: Documentation
+
+* fix permissions in "publish github release" example ([40087a9](https://github.com/flex-development/dist-tag-action/commit/40087a94dab30230be4a351e0df45dff68ff390b))
+* add "publish github release" example ([8abd38d](https://github.com/flex-development/dist-tag-action/commit/8abd38d084b3e2b45b13bb55a17b98f662b435f2))
+* **action:** inputs and outputs ([fd774f0](https://github.com/flex-development/dist-tag-action/commit/fd774f03ab38d03725505cb90fee4e169511d285))
+* **action:** usage ([cd19a97](https://github.com/flex-development/dist-tag-action/commit/cd19a97eb664efa57e4a375ef26ca5f335fa5f4e))
+
+
+### :sparkles: Features
+
+* **action:** `run` ([06215a3](https://github.com/flex-development/dist-tag-action/commit/06215a304f3856113a5c99a150807e3acf847c55))
+
+
+### :white_check_mark: Testing
+
+* **action:** test action in workflow context ([5dedbdc](https://github.com/flex-development/dist-tag-action/commit/5dedbdc7e702d55ac272aaac106372b7bcfa1601))
+
 ## [1.0.0-dev.9](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.8...1.0.0-dev.9) (2022-08-13)
 
 

@@ -10,6 +10,8 @@
 
 ## Usage
 
+See [`action.yml`](action.yml)
+
 ```yaml
 name: dist-tag
 on:

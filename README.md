@@ -6,7 +6,7 @@
 [![license](https://img.shields.io/github/license/flex-development/dist-tag-action.svg)](LICENSE.md)
 [![typescript](https://badgen.net/badge/-/typescript?color=2a72bc&icon=typescript&label)](https://typescriptlang.org)
 
-> [Distribution tag][3] lookup utility for GitHub Actions.
+> **[Distribution tag][3] lookup utility for GitHub Actions.**
 
 ## Usage
 
@@ -62,7 +62,103 @@ outputs:
 
 ## Examples
 
-**TODO**: Update documentation.
+### Publish GitHub Release
+
+See [`.github/workflows/release.yml`](.github/workflows/release.yml) for a
+breadth worthy alternative.
+
+```yaml
+# Release
+#
+# Publish a GitHub release when a `release/*` branch is merged into `main`.
+#
+# References:
+#
+# - https://cli.github.com/manual/gh_release_create
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+# - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
+# - https://github.com/actions/checkout
+# - https://github.com/actions/github-script
+
+---
+name: release
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+permissions:
+  contents: write
+  packages: read
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  metadata:
+    if: (startsWith(github.head_ref, 'release/') && github.event.pull_request.merged)
+    runs-on: ubuntu-latest
+    outputs:
+      prerelease: ${{ steps.prerelease.outputs.result }}
+      tag: ${{ steps.tag.outputs.result }}
+      version: ${{ steps.version.outputs.result }}
+    steps:
+      - id: checkout
+        name: Checkout ${{ env.REF }}
+        uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ env.REF }}
+      - id: version
+        name: Get version
+        run: echo "::set-output name=result::$(jq .version package.json -r)"
+      - id: tag
+        name: Get release tag
+        run: echo "::set-output name=result::${{ steps.version.outputs.result }}"
+      - id: dist-tag
+        name: Get dist tag
+        uses: flex-development/dist-tag-action@<VERSION>
+        with:
+          target: ${{ steps.version.outputs.result }}
+      - id: prerelease
+        name: Check for prerelease
+        uses: actions/github-script@v6.1.0
+        env:
+          DIST_TAG: ${{ steps.dist-tag.outputs.tag }}
+        with:
+          script: return !!process.env.DIST_TAG
+  publish:
+    needs: metadata
+    runs-on: ubuntu-latest
+    env:
+      NOTES_FILE: ./RELEASE_NOTES.md
+    steps:
+      - id: checkout
+        name: Checkout ${{ github.head_ref }}
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - id: yarn
+        name: Install dependencies
+        run: yarn
+        env:
+          HUSKY: 0
+          NODE_AUTH_TOKEN: ${{ env.GITHUB_TOKEN }}
+      - id: pack
+        name: Pack project
+        run: yarn pack -o %s-%v.tgz
+        env:
+          NODE_ENV: production
+      - id: release-notes
+        name: Generate release notes
+        run: yarn conventional-changelog -o $NOTES_FILE
+      - id: publish
+        name: Publish release
+        run: gh release create $TAG *.tgz -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
+          PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
+          TAG: ${{ needs.metadata.outputs.tag }}
+```
 
 ## Built With
 

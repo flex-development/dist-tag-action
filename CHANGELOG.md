@@ -1,3 +1,27 @@
+## [1.0.0-dev.8](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.7...1.0.0-dev.8) (2022-08-13)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** `label-syncer` -> `labels` ([888c1fc](https://github.com/flex-development/dist-tag-action/commit/888c1fc472984072b0178668b72a8e9a326a85df))
+* **workflows:** add `workflow_dispatch` event to labels workflow ([bcf433a](https://github.com/flex-development/dist-tag-action/commit/bcf433ae4a29b609a152aa823f471c0314208b1d))
+* **workflows:** fix labels workflow permissions ([397bb82](https://github.com/flex-development/dist-tag-action/commit/397bb82547888a79cdfa0f8f144e76a92c362962))
+* **workflows:** handle `status:prereleased` label in release workflow ([ee539d5](https://github.com/flex-development/dist-tag-action/commit/ee539d53155fbcaadffd0f82afaed33d56c33aad))
+* **workflows:** remove `inputs.version` from release workflow ([3192e79](https://github.com/flex-development/dist-tag-action/commit/3192e798c809d977c8c8e187ac0db1ae64e2d3cc))
+* **workflows:** remove `release.jobs.metadata.steps.artifact` ([5187247](https://github.com/flex-development/dist-tag-action/commit/5187247f108a986ddf9a2aa860f7b9cf48e6a627))
+* **workflows:** specify checkout ref in labels workflow ([e440d62](https://github.com/flex-development/dist-tag-action/commit/e440d62dfb6fba5d6fcab3aae582cc64825fd8e7))
+
+
+### :pencil: Documentation
+
+* add "publish github release" example ([8abd38d](https://github.com/flex-development/dist-tag-action/commit/8abd38d084b3e2b45b13bb55a17b98f662b435f2))
+* **release:** fix workflow docs ([c53273d](https://github.com/flex-development/dist-tag-action/commit/c53273d54485a9ff797b1c859d27311ed37d1a3c))
+
+
+### :house_with_garden: Housekeeping
+
+* **github:** add `status:prereleased` label ([0a141d9](https://github.com/flex-development/dist-tag-action/commit/0a141d91449e4b2b9c7654697b733a6f7eccff24))
+
 ## [1.0.0-dev.7](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.6...1.0.0-dev.7) (2022-08-13)
 
 

@@ -48,30 +48,25 @@ jobs:
     outputs:
       artifact: ${{ steps.artifact.outputs.result }}
       prerelease: ${{ steps.prerelease.outputs.result }}
-      tag: ${{ steps.version.outputs.tag }}
-      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.tag.outputs.result }}
+      version: ${{ steps.version.outputs.result }}
     steps:
       - id: checkout
-        name: Checkout main
+        name: Checkout ${{ env.REF }}
         uses: actions/checkout@v3.0.2
         with:
-          ref: main
+          ref: ${{ env.REF }}
       - id: version
-        name: Get version and tag
-        uses: actions/github-script@v6.1.0
-        with:
-          script: |
-            const { inputs, pull_request } = context.payload
-
-            const version = inputs?.version ?? pull_request.head.ref.split('release/')[1]
-
-            core.setOutput('tag', version)
-            core.setOutput('version', version)
+        name: Get version
+        run: echo "::set-output name=result::$(jq .version package.json -r)"
+      - id: tag
+        name: Get release tag
+        run: echo "::set-output name=result::${{ steps.version.outputs.result }}"
       - id: artifact
         name: Get artifact path
         uses: actions/github-script@v6.1.0
         env:
-          VERSION: ${{ steps.version.outputs.version }}
+          VERSION: ${{ steps.version.outputs.result }}
         with:
           result-encoding: string
           script: |
@@ -83,7 +78,7 @@ jobs:
         name: Get dist tag
         uses: ./
         with:
-          target: ${{ steps.version.outputs.version }}
+          target: ${{ steps.version.outputs.result }}
       - id: prerelease
         name: Check for prerelease
         uses: actions/github-script@v6.1.0

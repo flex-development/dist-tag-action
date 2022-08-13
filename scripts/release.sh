@@ -14,10 +14,10 @@
 
 yarn test
 yarn pack
-VERSION=$(fx package.json .version)
+VERSION=$(jq .version package.json -r)
 RELEASE_BRANCH=release/$VERSION
 git switch -c $RELEASE_BRANCH
 git add .
-git commit -s -m "release: $(fx package.json .name)@$VERSION" --no-verify
+git commit -s -m "release: $(jq .name package.json -r)@$VERSION" --no-verify
 git push origin -u --no-verify $RELEASE_BRANCH
 yarn clean:pack

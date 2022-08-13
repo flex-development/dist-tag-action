@@ -349,7 +349,7 @@ Before releasing, the following steps must be completed:
    - `bump prepatch --preid <dist-tag>`
    - `bump prerelease --preid <dist-tag>`
 3. `yarn conventional-changelog -i CHANGELOG.md -s`
-4. `yarn release $(fx package.json .version)`
+4. `yarn release`
 5. Open a new PR from `release/*` into `main`
    - pr title should match `release: <package.json#name>@<new-version>`
      - e.g: `release: @flex-development/dist-tag-action@1.1.0`

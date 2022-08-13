@@ -22,6 +22,8 @@ on:
       pr:
         description: pull request number
         required: true
+permissions:
+  issues: write
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:

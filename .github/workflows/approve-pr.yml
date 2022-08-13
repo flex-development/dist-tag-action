@@ -9,7 +9,6 @@
 # - https://cli.github.com/manual/gh_pr_review
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://github.com/actions/checkout
-# - https://github.com/hmarr/debug-action
 
 ---
 name: approve-pr
@@ -24,9 +23,6 @@ jobs:
     if: github.event.requested_reviewer.login == 'flexdevelopment'
     runs-on: ubuntu-latest
     steps:
-      - id: debug
-        name: Print environment variables and event payload
-        uses: hmarr/debug-action@v2.0.1
       - id: checkout
         name: Checkout ${{ github.head_ref }}
         uses: actions/checkout@v3.0.2

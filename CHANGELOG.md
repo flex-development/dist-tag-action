@@ -1,3 +1,19 @@
+## [1.0.0-dev.7](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.6...1.0.0-dev.7) (2022-08-13)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** remove `setup-node` step from `release.jobs.publish` ([fdc6850](https://github.com/flex-development/dist-tag-action/commit/fdc6850264c7ca921227c16ab9c8356584916e84))
+* **workflows:** remove `setup-node` step from ci workflow ([ae6c629](https://github.com/flex-development/dist-tag-action/commit/ae6c629f6fe8d4df565a66d67dbc313103640dc7))
+* **workflows:** run ci workflow on subset of `push` events ([b48a8fc](https://github.com/flex-development/dist-tag-action/commit/b48a8fc1568118bc74308bedef8789a1371fea54))
+* **workflows:** use `jq` in release workflow ([8c67efc](https://github.com/flex-development/dist-tag-action/commit/8c67efcb409daf25dc3220ad91b95519e5b4cbce))
+
+
+### :pencil: Documentation
+
+* add `action.yml` link to usage guide ([6dfdf2a](https://github.com/flex-development/dist-tag-action/commit/6dfdf2a6aa5e068f9a5abf8b2e536821001d5ccc))
+* **workflows:** add `action-test` badge ([982920b](https://github.com/flex-development/dist-tag-action/commit/982920bcca04c3c69363219b8facb976ef3b910f))
+
 ## [1.0.0-dev.6](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.5...1.0.0-dev.6) (2022-08-12)
 
 

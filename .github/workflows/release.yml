@@ -1,6 +1,6 @@
 # Release
 #
-# Publish GitHub release when a `release/*` branch is merged into `main` or on workflow dispatch.
+# Publish a GitHub release when a `release/*` branch is merged into `main` or on workflow dispatch.
 #
 # References:
 #
@@ -43,7 +43,6 @@ jobs:
       github.event.pull_request.merged)
     runs-on: ubuntu-latest
     outputs:
-      artifact: ${{ steps.artifact.outputs.result }}
       prerelease: ${{ steps.prerelease.outputs.result }}
       tag: ${{ steps.tag.outputs.result }}
       version: ${{ steps.version.outputs.result }}
@@ -59,18 +58,6 @@ jobs:
       - id: tag
         name: Get release tag
         run: echo "::set-output name=result::${{ steps.version.outputs.result }}"
-      - id: artifact
-        name: Get artifact path
-        uses: actions/github-script@v6.1.0
-        env:
-          VERSION: ${{ steps.version.outputs.result }}
-        with:
-          result-encoding: string
-          script: |
-            const workspace = `@${context.payload.repository.full_name}`
-            const version = process.env.VERSION
-
-            return `./${workspace.replace('/', '-')}-${version}.tgz`
       - id: dist-tag
         name: Get dist tag
         uses: ./
@@ -154,9 +141,8 @@ jobs:
             })
       - id: publish
         name: Publish release
-        run: gh release create $TAG $ASSET -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
+        run: gh release create $TAG *.tgz -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
         env:
-          ASSET: ${{ needs.metadata.outputs.artifact }}
           GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
   cleanup:

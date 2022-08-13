@@ -174,28 +174,30 @@ jobs:
           pr: ${{ github.event.inputs.pr || github.event.number }}
           repo: ${{ github.event.repository.name }}
       - id: label-linked-issues
-        name: Add status:released label to linked issues
+        name: Label linked issues
         uses: actions/github-script@v6.1.0
         env:
           DATA: ${{ steps.query-linked-issues.outputs.data }}
+          PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
         with:
           script: |
             const { closingIssuesReferences } = JSON.parse(process.env.DATA).repository.pullRequest
 
             const issues = closingIssuesReferences.edges.map(edge => edge.node.number)
+            const prerelease = JSON.parse(process.env.PRERELEASE || 'false')
 
             for (const issue_number of issues) {
               await github.rest.issues.addLabels({
                 ...context.repo,
                 issue_number,
-                labels: ['status:released']
+                labels: [`status:${prerelease ? 'pre' : ''}released`]
               })
             }
       - id: close-released-issues
-        name: Close issues with status:released label
+        name: Close released issues
         uses: bdougie/close-issues-based-on-label@master
         env:
-          LABEL: status:released
+          LABEL: status:${{ (needs.metadata.outputs.prerelease && 'prereleased') || 'released' }}
       - id: delete-release-branch
         name: Delete release/${{ needs.metadata.outputs.version }}
         uses: dawidd6/action-delete-branch@v3.1.0

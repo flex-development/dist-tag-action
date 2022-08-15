@@ -54,7 +54,7 @@ jobs:
           repo: ${{ github.event.repository.name }}
       - id: log
         name: Log linked issues
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v6.1.1
         env:
           DATA: ${{ steps.query.outputs.data }}
         with:

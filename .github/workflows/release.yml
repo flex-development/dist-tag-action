@@ -65,7 +65,7 @@ jobs:
           target: ${{ steps.version.outputs.result }}
       - id: prerelease
         name: Check for prerelease
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v6.1.1
         env:
           DIST_TAG: ${{ steps.dist-tag.outputs.tag }}
         with:
@@ -111,7 +111,7 @@ jobs:
           TS_NODE_PROJECT: ./tsconfig.tsnode.json
       - id: tag
         name: Create annotated tag
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v6.1.1
         env:
           VERSION: ${{ needs.metadata.outputs.version }}
         with:
@@ -175,7 +175,7 @@ jobs:
           repo: ${{ github.event.repository.name }}
       - id: label-linked-issues
         name: Label linked issues
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v6.1.1
         env:
           DATA: ${{ steps.query-linked-issues.outputs.data }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}

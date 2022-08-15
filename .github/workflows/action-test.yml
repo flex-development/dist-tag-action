@@ -30,7 +30,7 @@ jobs:
     steps:
       - id: context
         name: Print context
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v6.1.1
         with:
           script: console.log(context)
       - id: env

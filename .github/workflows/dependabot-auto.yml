@@ -46,7 +46,7 @@ jobs:
         with:
           persist-credentials: ${{ steps.metadata.outputs.package-ecosystem == 'npm' }}
           ref: ${{ github.head_ref }}
-      - id: fix-yarn-lock
+      - id: lockfile-fix
         name: Fix yarn.lock
         if: steps.metadata.outputs.package-ecosystem == 'npm'
         run: yarn --mode=update-lockfile
@@ -54,7 +54,7 @@ jobs:
         name: Deduplicate dependencies
         if: steps.metadata.outputs.package-ecosystem == 'npm'
         run: yarn dedupe --mode=update-lockfile
-      - id: push-yarn-lock
+      - id: lockfile-push
         name: Push yarn.lock
         if: steps.metadata.outputs.package-ecosystem == 'npm'
         run: |

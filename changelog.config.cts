@@ -12,6 +12,7 @@ import type {
 } from 'conventional-changelog-writer'
 import type { Commit, CommitRaw } from 'conventional-commits-parser'
 import dateformat from 'dateformat'
+import fs from 'node:fs'
 import pkg from './package.json'
 
 /**
@@ -201,6 +202,7 @@ const config: Config = {
         previousTag
       }
     },
+    headerPartial: fs.readFileSync('templates/changelog/header.hbs', 'utf8'),
     ignoreReverted: false
   }
 }

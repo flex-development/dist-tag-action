@@ -1,3 +1,10 @@
+## [1.0.1-alpha.2](https://github.com/flex-development/dist-tag-action/compare/1.0.1-alpha.1...1.0.1-alpha.2) (2022-08-18)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** try fixing prerelease check with `toJSON` ([f0fca90](https://github.com/flex-development/dist-tag-action/commit/f0fca9027ef2944aae63a555881cc2104599de00))
+
 ## [1.0.1-alpha.1](https://github.com/flex-development/dist-tag-action/compare/1.0.0...1.0.1-alpha.1) (2022-08-18)
 
 

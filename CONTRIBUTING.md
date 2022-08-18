@@ -340,6 +340,8 @@ Before releasing, the following steps must be completed:
 
 1. Schedule a code freeze
 2. Decide what type of version bump the package needs
+   - `yarn recommended-bump`
+3. Bump version
    - `bump <new-version>`
    - `bump major`
    - `bump minor`
@@ -348,9 +350,9 @@ Before releasing, the following steps must be completed:
    - `bump preminor --preid <dist-tag>`
    - `bump prepatch --preid <dist-tag>`
    - `bump prerelease --preid <dist-tag>`
-3. `yarn conventional-changelog -i CHANGELOG.md -s`
-4. `yarn release`
-5. Open a new PR from `release/*` into `main`
+4. `yarn conventional-changelog -i CHANGELOG.md -s`
+5. `yarn release`
+6.  Open a new PR from `release/*` into `main`
    - pr title should match `release: <package.json#name>@<new-version>`
      - e.g: `release: @flex-development/dist-tag-action@1.1.0`
    - link all issues being released

@@ -23,9 +23,6 @@ on:
       - closed
   workflow_dispatch:
     inputs:
-      pr:
-        description: pull request number
-        required: true
       ref:
         description: full commit sha
         required: true

@@ -124,7 +124,7 @@ jobs:
 
             const tag = await github.rest.git.createTag({
               ...context.repo,
-              message: `release: @${context.payload.repository.full_name}@${process.env.VERSION}`,
+              message: `release: ${process.env.TAG}`,
               object: commit.data.sha,
               tag: process.env.TAG,
               tagger: commit.data.commit.committer,

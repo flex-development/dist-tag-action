@@ -352,15 +352,14 @@ Before releasing, the following steps must be completed:
    - `bump prerelease --preid <dist-tag>`
 4. `yarn conventional-changelog -i CHANGELOG.md -s`
 5. `yarn release`
-6.  Open a new PR from `release/*` into `main`
-   - pr title should match `release: <package.json#name>@<new-version>`
-     - e.g: `release: @flex-development/dist-tag-action@1.1.0`
+6. Open PR from `release/*` into `main`
+   - PR title should match `release: <release-tag>`
+     - e.g: `release: 1.1.0`
    - link all issues being released
    - after review, `squash and merge` PR
-     - `release: @flex-development/dist-tag-action@<new-version> (#pull-request-n)`
-       - e.g: `release: @flex-development/dist-tag-action@1.1.0 (#3)`
-   - release workflow will start when PR is merged
-   - PR reviewer should make sure workflow completes all jobs successfully
+     - `release: <release-tag> (#pull-request-n)`
+       - e.g: `release: 1.1.0 (#3)`
+   - on PR merge, [release workflow](.github/workflows/release.yml) will fire
      - if successful, the workflow will:
        - pack project
        - create and push new tag

@@ -62,7 +62,7 @@
     "@commitlint/types": "17.0.0",
     "@faker-js/faker": "7.4.0",
     "@flex-development/dist-tag": "1.0.0",
-    "@flex-development/tutils": "5.0.0-dev.1",
+    "@flex-development/tutils": "5.0.0",
     "@types/chai": "4.3.3",
     "@types/conventional-changelog": "3.1.1",
     "@types/conventional-changelog-config-spec": "2.1.1",

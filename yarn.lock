@@ -902,7 +902,7 @@ __metadata:
     "@commitlint/types": "npm:17.0.0"
     "@faker-js/faker": "npm:7.4.0"
     "@flex-development/dist-tag": "npm:1.0.0"
-    "@flex-development/tutils": "npm:5.0.0-dev.1"
+    "@flex-development/tutils": "npm:5.0.0"
     "@types/chai": "npm:4.3.3"
     "@types/conventional-changelog": "npm:3.1.1"
     "@types/conventional-changelog-config-spec": "npm:2.1.1"
@@ -969,10 +969,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@flex-development/tutils@npm:5.0.0-dev.1":
-  version: 5.0.0-dev.1
-  resolution: "@flex-development/tutils@npm:5.0.0-dev.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Ftutils%2F5.0.0-dev.1%2F9d128c77534cf39fd29cad7733e8e8c4c2106232"
-  checksum: 07410972e5fff494034c908481ebd9ed6c0bc18e0146bc7872313909a1da05fb125460aed757df338dfacf3467ae36f64ac34cc9a3b81e626c81d7ad98ea7837
+"@flex-development/tutils@npm:5.0.0":
+  version: 5.0.0
+  resolution: "@flex-development/tutils@npm:5.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Ftutils%2F5.0.0%2F635d885ed4f6081b043c724bde1ab586e621dd9b"
+  checksum: d9ce3008f650a12e6fcb92a6ff252dce48943a0cfc4e8622d178eb92eb8ba16a3e04ac46193919f2c2ea4a1ea38c21a2d33bae8274abc2e2ba07c0671f30e87b
   languageName: node
   linkType: hard
 

@@ -1,3 +1,10 @@
+## [1.0.1-alpha.3](https://github.com/flex-development/dist-tag-action/compare/1.0.1-alpha.2...1.0.1-alpha.3) (2022-08-18)
+
+
+### :robot: Continuous Integration
+
+* **workflows:** fix prerelease check ([89e6ca9](https://github.com/flex-development/dist-tag-action/commit/89e6ca97aa0cfc906e08e2f61bf7d88152d67194))
+
 ## [1.0.1-alpha.2](https://github.com/flex-development/dist-tag-action/compare/1.0.1-alpha.1...1.0.1-alpha.2) (2022-08-18)
 
 

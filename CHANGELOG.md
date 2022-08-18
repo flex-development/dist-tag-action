@@ -1,3 +1,38 @@
+## [1.0.1-alpha.1](https://github.com/flex-development/dist-tag-action/compare/1.0.0...1.0.1-alpha.1) (2022-08-18)
+
+
+### :package: Build
+
+* fix .npmignore ([e65a89e](https://github.com/flex-development/dist-tag-action/commit/e65a89eea3ee2597d21274e9900de30952818a85))
+
+
+### :robot: Continuous Integration
+
+* **deps:** bump actions/github-script from 6.1.0 to 6.1.1 ([#19](https://github.com/flex-development/dist-tag-action/issues/19)) ([7949f6f](https://github.com/flex-development/dist-tag-action/commit/7949f6fa55e5143eba6493e6d185ca8564dcbbd4))
+* **workflows:** `label-linked-issues` ([67cdc54](https://github.com/flex-development/dist-tag-action/commit/67cdc54a4191e896da6fd0f56d217df69ed46f6e))
+* **workflows:** add test coverage output to ci workflow ([9a3be29](https://github.com/flex-development/dist-tag-action/commit/9a3be29d71718be8c9b3ffbf308cbfdb07bb91a6))
+* **workflows:** check for `package-ecosystem` in [@dependabot](https://github.com/dependabot) auto-merge conditional ([26cee83](https://github.com/flex-development/dist-tag-action/commit/26cee8372143861c34c515d4efee40f0905984f3))
+* **workflows:** fix [@dependabot](https://github.com/dependabot) lockfile commit ([d56ed31](https://github.com/flex-development/dist-tag-action/commit/d56ed31bf250d25a59e69f096c4efb2ae88ed9dd))
+* **workflows:** set github token permissions in `lock-inactive-threads` ([d8eb6ee](https://github.com/flex-development/dist-tag-action/commit/d8eb6eea45d93ee94ae5f6bcdab5b94420d1e5e2))
+* **workflows:** sign tags in release workflow ([3960390](https://github.com/flex-development/dist-tag-action/commit/39603903431557e42f93f7740b1028b8e5d1fcae))
+* **workflows:** update prerelease check output declaration ([61b58a0](https://github.com/flex-development/dist-tag-action/commit/61b58a02e3ce19a62031294ca7279a94b36d3baa))
+
+
+### :pencil: Documentation
+
+* `rebase and merge` ([fa03f9d](https://github.com/flex-development/dist-tag-action/commit/fa03f9db3e00fbb60bc62c1764a8fd1b12f21b93))
+
+
+### :house_with_garden: Housekeeping
+
+* **release:** fix release dates ([39f11da](https://github.com/flex-development/dist-tag-action/commit/39f11dab14eebcca7b07702ec4e56f220ff0fe6c))
+* **release:** get recommended version bump based on commits ([82236f4](https://github.com/flex-development/dist-tag-action/commit/82236f43f3d9af63fa5a9b6db776126c5c0bdb7a))
+* **release:** publish releases from bot account ([1129aa1](https://github.com/flex-development/dist-tag-action/commit/1129aa1e5d892ae503b644d5ba3fb5ff73660df6))
+* **release:** update commit message format ([71c322a](https://github.com/flex-development/dist-tag-action/commit/71c322a7e96fbc0e61e705c83f09e8c6642e4b23))
+* **release:** use current date as release date ([9c867a1](https://github.com/flex-development/dist-tag-action/commit/9c867a1a331bb459a820bd5b6d1d413ce4dea181))
+* **release:** use current tag as changelog entry title ([376510f](https://github.com/flex-development/dist-tag-action/commit/376510f970c53473fbe44d88554b4289bc3a7f3d))
+* **vscode:** set yaml schema for github workflows ([ee41291](https://github.com/flex-development/dist-tag-action/commit/ee41291456b22dc134bd3818d65f98d0d925a561))
+
 ## [1.0.0](https://github.com/flex-development/dist-tag-action/compare/1.0.0-dev.9...1.0.0) (2022-08-13)
 
 

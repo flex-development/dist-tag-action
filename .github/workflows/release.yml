@@ -65,7 +65,6 @@ jobs:
         env:
           DIST_TAG: ${{ steps.dist-tag.outputs.tag }}
         with:
-          # todo: calculate number of prereleases to include in release notes
           script: return !!process.env.DIST_TAG
   publish:
     needs: metadata
@@ -101,7 +100,6 @@ jobs:
           NODE_OPTIONS: --es-module-specifier-resolution=node
       - id: release-notes
         name: Generate release notes
-        # todo: handle prereleases
         run: yarn conventional-changelog -o $NOTES_FILE
         env:
           TS_NODE_PROJECT: ./tsconfig.tsnode.json

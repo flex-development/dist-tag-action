@@ -135,5 +135,8 @@
       "icon": "typings"
     }
   ],
-  "workbench.iconTheme": "vscode-icons"
+  "workbench.iconTheme": "vscode-icons",
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow": "/.github/workflows/*.yml"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@flex-development/dist-tag-action",
   "description": "Distribution tag lookup utility for GitHub Actions",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.1",
   "keywords": [
     "dist-tag",
     "github-action",

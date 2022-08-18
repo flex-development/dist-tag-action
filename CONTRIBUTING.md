@@ -365,7 +365,6 @@ Before releasing, the following steps must be completed:
        - pack project
        - create and push new tag
        - create and publish github release
-       - add `status:prereleased` or `status:released` label to linked issues
        - make sure all prereleased or released issues are closed
        - delete release branch
 

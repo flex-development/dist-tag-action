@@ -28,8 +28,9 @@ describe('functional:run', () => {
   })
 
   it('should set outputs', () => {
-    expect(setOutput).toHaveBeenCalledTimes(2)
+    expect(setOutput).toHaveBeenCalledTimes(3)
     expect(setOutput).toHaveBeenCalledWith('flag', '')
+    expect(setOutput).toHaveBeenCalledWith('prerelease', false)
     expect(setOutput).toHaveBeenCalledWith('tag', '')
   })
 

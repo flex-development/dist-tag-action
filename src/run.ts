@@ -46,6 +46,7 @@ function run(): void {
     const tag: string = lookup({ delimiter, target })
 
     setOutput('flag', tag ? ['--tag', tag].join(' ').trim() : tag)
+    setOutput('prerelease', tag !== '')
     setOutput('tag', tag)
   } catch (e: unknown) {
     setFailed(e as Error)

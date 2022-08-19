@@ -83,7 +83,6 @@ breadth worthy alternative.
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
 # - https://github.com/actions/checkout
-# - https://github.com/actions/github-script
 
 ---
 name: release
@@ -102,7 +101,7 @@ jobs:
     if: (startsWith(github.head_ref, 'release/') && github.event.pull_request.merged)
     runs-on: ubuntu-latest
     outputs:
-      prerelease: ${{ steps.prerelease.outputs.result }}
+      prerelease: ${{ steps.dist-tag.outputs.prerelease }}
       tag: ${{ steps.tag.outputs.result }}
       version: ${{ steps.version.outputs.result }}
     steps:
@@ -122,13 +121,6 @@ jobs:
         uses: flex-development/dist-tag-action@<VERSION>
         with:
           target: ${{ steps.version.outputs.result }}
-      - id: prerelease
-        name: Check for prerelease
-        uses: actions/github-script@v6.1.0
-        env:
-          DIST_TAG: ${{ steps.dist-tag.outputs.tag }}
-        with:
-          script: return !!process.env.DIST_TAG
   publish:
     needs: metadata
     runs-on: ubuntu-latest

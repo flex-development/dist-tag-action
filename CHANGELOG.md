@@ -1,3 +1,36 @@
+## [1.1.0](https://github.com/flex-development/dist-tag-action/compare/1.0.1-alpha.3...1.1.0) (2022-08-18)
+
+
+### :package: Build
+
+* **deps-dev:** bump @flex-development/tutils from 5.0.0-dev.1 to 5.0.0 ([63781bd](https://github.com/flex-development/dist-tag-action/commit/63781bd9dd61f68670a0dc943bbb7151b15add5a))
+
+
+### :robot: Continuous Integration
+
+* **workflows:** `integrity` ([21beca5](https://github.com/flex-development/dist-tag-action/commit/21beca52dfd4207e7845ba891dfcab59cc984e86))
+* **workflows:** cleanup workflow environments and options ([16aca4a](https://github.com/flex-development/dist-tag-action/commit/16aca4aac72878b3af62819e51705ce56e389d9c))
+* **workflows:** use `outputs.prerelease` in release workflow ([cabb68a](https://github.com/flex-development/dist-tag-action/commit/cabb68ad001e25ee329b6980df8d34d847a6a199))
+
+
+### :pencil: Documentation
+
+* add `environment` to "publish github release" example workflow ([276a4e0](https://github.com/flex-development/dist-tag-action/commit/276a4e0b0f4c8da1541bcd9660312ec4ef2b6990))
+* add `outputs.prerelease` usage to "publish github release" example ([22a5fbb](https://github.com/flex-development/dist-tag-action/commit/22a5fbb410ad6539133a5e6267f24a9c53008027))
+* cleanup "publish github release" example workflow ([533ac20](https://github.com/flex-development/dist-tag-action/commit/533ac2093e39ec8115c516419f83bb833985a5a3))
+* fix checkout step in "publish github release" example ([f5150c6](https://github.com/flex-development/dist-tag-action/commit/f5150c6d29af9517c77a7f55d9de3e1db16f361d))
+* sign tags in "publish github release" example workflow ([da93d45](https://github.com/flex-development/dist-tag-action/commit/da93d45c08013b67527cccba1cc2ae6c46edf2e5))
+
+
+### :sparkles: Features
+
+* **action:** `outputs.prerelease` ([#24](https://github.com/flex-development/dist-tag-action/issues/24)) ([154d507](https://github.com/flex-development/dist-tag-action/commit/154d5075b1a6ca96434cce302322699ba51d1ad3))
+
+
+### :house_with_garden: Housekeeping
+
+* only run checks in lint-staged config ([2087aa6](https://github.com/flex-development/dist-tag-action/commit/2087aa6ec808d4ba22b94e1feeacc2f5906a8d0e))
+
 ## [1.0.1-alpha.3](https://github.com/flex-development/dist-tag-action/compare/1.0.1-alpha.2...1.0.1-alpha.3) (2022-08-18)
 
 

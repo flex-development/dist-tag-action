@@ -92,13 +92,9 @@ on:
       - main
     types:
       - closed
-permissions:
-  packages: read
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   metadata:
-    if: (startsWith(github.head_ref, 'release/') && github.event.pull_request.merged)
+    if: startsWith(github.head_ref, 'release/') && github.event.pull_request.merged
     runs-on: ubuntu-latest
     outputs:
       prerelease: ${{ steps.dist-tag.outputs.prerelease }}
@@ -138,7 +134,6 @@ jobs:
         run: yarn
         env:
           HUSKY: 0
-          NODE_AUTH_TOKEN: ${{ env.GITHUB_TOKEN }}
       - id: pack
         name: Pack project
         run: yarn pack -o %s-%v.tgz

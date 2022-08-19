@@ -9,8 +9,6 @@ on:
       - dist/main.mjs
       - src/run.ts
   push:
-    branches:
-      - main
     paths:
       - .github/workflows/action-test.yml
       - build.config.ts

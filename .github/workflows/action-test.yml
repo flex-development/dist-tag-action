@@ -59,13 +59,16 @@ jobs:
         name: Outputs
         run: |
           echo ${{ env.STABLE }}
-          echo "tag: '${{ steps.stable.outputs.tag }}'"
-          echo "flag: '${{ steps.stable.outputs.flag }}'"
+          echo tag: ${{ steps.stable.outputs.tag }}
+          echo flag: ${{ steps.stable.outputs.flag }}
+          echo prerelease: ${{ steps.stable.outputs.prerelease }}
 
           echo ${{ env.UNSTABLE }}
-          echo "tag: '${{ steps.unstable.outputs.tag }}'"
-          echo "flag: '${{ steps.unstable.outputs.flag }}'"
+          echo tag: ${{ steps.unstable.outputs.tag }}
+          echo flag: ${{ steps.unstable.outputs.flag }}
+          echo prerelease: ${{ steps.unstable.outputs.prerelease }}
 
           echo ${{ env.UNSTABLE_DELIMITED }}
-          echo "tag: '${{ steps.unstable-delimited.outputs.tag }}'"
-          echo "flag: '${{ steps.unstable-delimited.outputs.flag }}'"
+          echo tag: ${{ steps.unstable-delimited.outputs.tag }}
+          echo flag: ${{ steps.unstable-delimited.outputs.flag }}
+          echo prerelease: ${{ steps.unstable-delimited.outputs.prerelease }}

@@ -42,7 +42,7 @@ jobs:
     env:
       REF: ${{ github.event.inputs.sha || github.head_ref }}
     outputs:
-      prerelease: ${{ steps.prerelease.outputs.result }}
+      prerelease: ${{ steps.dist-tag.outputs.prerelease }}
       tag: ${{ steps.tag.outputs.result }}
       version: ${{ steps.version.outputs.result }}
     steps:
@@ -65,9 +65,6 @@ jobs:
         uses: ./
         with:
           target: ${{ steps.version.outputs.result }}
-      - id: prerelease
-        name: Check for prerelease
-        run: echo "::set-output name=result::${{ steps.dist-tag.outputs.tag != '' }}"
   publish:
     needs: metadata
     runs-on: ubuntu-latest

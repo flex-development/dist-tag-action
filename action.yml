@@ -19,6 +19,8 @@ outputs:
     description: |
       dist tag in cli flag format (--tag <tag>) or empty string
       see: https://docs.npmjs.com/cli/v8/commands/npm-publish#tag
+  prerelease:
+    description: boolean indicating prerelease state. determined by dist tag length
   tag:
     description: dist tag or empty string
 runs:

@@ -35,10 +35,13 @@ jobs:
           target: ${{ github.event.inputs.target }}
       - id: print-raw
         name: Print raw dist tag
-        run: echo "'${{ steps.dist-tag.outputs.tag }}'"
+        run: echo ${{ steps.dist-tag.outputs.tag }}
       - id: print-flag
         name: Print dist tag as npm flag (--tag <tag>)
-        run: echo "'${{ steps.dist-tag.outputs.flag }}'"
+        run: echo ${{ steps.dist-tag.outputs.flag }}
+      - id: print-prerelease-state
+        name: Print prerelease state
+        run: echo ${{ steps.dist-tag.outputs.prerelease }}
 ```
 
 ## Inputs and Outputs
@@ -56,6 +59,8 @@ outputs:
     description: |
       dist tag in cli flag format (--tag <tag>) or empty string
       see: https://docs.npmjs.com/cli/v8/commands/npm-publish#tag
+  prerelease:
+    description: boolean indicating prerelease state. determined by dist tag length
   tag:
     description: dist tag or empty string
 ```

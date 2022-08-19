@@ -120,6 +120,11 @@ jobs:
   publish:
     needs: metadata
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url:
+        ${{ format('{0}/{1}/releases/tag/{2}', github.server_url, github.repository,
+        needs.metadata.outputs.tag) }}
     env:
       NOTES_FILE: ./RELEASE_NOTES.md
     steps:

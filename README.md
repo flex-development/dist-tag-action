@@ -83,6 +83,7 @@ breadth worthy alternative.
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
 # - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
 # - https://github.com/actions/checkout
+# - https://github.com/crazy-max/ghaction-import-gpg
 
 ---
 name: release
@@ -127,13 +128,32 @@ jobs:
         needs.metadata.outputs.tag) }}
     env:
       NOTES_FILE: ./RELEASE_NOTES.md
+      TAG: ${{ needs.metadata.outputs.tag }}
     steps:
       - id: checkout
-        name: Checkout ${{ github.head_ref }}
+        name: Checkout event.pull_request.merge_commit_sha
         uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+      - id: gpg-import
+        name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v5.1.0
+        with:
+          git_config_global: true
+          git_tag_gpgsign: true
+          git_user_signingkey: true
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+      # todo: remove when https://github.com/crazy-max/ghaction-import-gpg/issues/118 is resolved
+      - id: gpg-trust
+        name: Set trust on GPG key
+        run: |
+          gpg --no-tty --command-fd 0 --edit-key ${{ steps.gpg-import.outputs.keyid }} << EOTRUST
+          trust
+          5
+          y
+          quit
+          EOTRUST
       - id: yarn
         name: Install dependencies
         run: yarn
@@ -147,13 +167,23 @@ jobs:
       - id: release-notes
         name: Generate release notes
         run: yarn conventional-changelog -o $NOTES_FILE
+      - id: tag
+        name: Create annotated tag
+        run: |
+          git tag --annotate --force --sign $TAG --message "release: $TAG"
+          git tag --verify $TAG
+          git push origin --tags
+        env:
+          GIT_AUTHOR_EMAIL: ${{ steps.gpg-import.outputs.email }}
+          GIT_AUTHOR_NAME: ${{ steps.gpg-import.outputs.name }}
+          GIT_COMMITTER_EMAIL: ${{ steps.gpg-import.outputs.email }}
+          GIT_COMMITTER_NAME: ${{ steps.gpg-import.outputs.name }}
       - id: publish
         name: Publish release
         run: gh release create $TAG *.tgz -t=$TAG -F=$NOTES_FILE -p=$PRERELEASE
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_REPO_ADMIN }}
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
-          TAG: ${{ needs.metadata.outputs.tag }}
 ```
 
 ## Built With

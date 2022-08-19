@@ -1,4 +1,9 @@
 # Action Test
+#
+# References:
+#
+# - https://github.com/hmarr/debug-action
+
 ---
 name: action-test
 on:
@@ -26,11 +31,9 @@ jobs:
   action-test:
     runs-on: ubuntu-latest
     steps:
-      - id: context
-        name: Print context
-        uses: actions/github-script@v6.1.1
-        with:
-          script: console.log(context)
+      - id: debug
+        name: Print environment variables and event payload
+        uses: hmarr/debug-action@v2.0.1
       - id: env
         name: Print environment variables
         run: printenv

@@ -107,10 +107,10 @@ jobs:
       version: ${{ steps.version.outputs.result }}
     steps:
       - id: checkout
-        name: Checkout ${{ env.REF }}
+        name: Checkout ${{ github.head_ref }}
         uses: actions/checkout@v3.0.2
         with:
-          ref: ${{ env.REF }}
+          ref: ${{ github.head_ref }}
       - id: version
         name: Get version
         run: echo "::set-output name=result::$(jq .version package.json -r)"

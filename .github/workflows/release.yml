@@ -27,10 +27,6 @@ on:
       sha:
         description: pull request merge commit sha
         required: true
-permissions:
-  contents: write
-  issues: write
-  packages: read
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
@@ -71,6 +67,9 @@ jobs:
           target: ${{ steps.version.outputs.result }}
   publish:
     needs: metadata
+    permissions:
+      contents: write
+      packages: read
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -141,6 +140,9 @@ jobs:
           PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
   cleanup:
     needs: [metadata, publish]
+    permissions:
+      contents: write
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - id: close-released-issues

@@ -49,7 +49,7 @@
     "postpublish": "toggle-scripts +prepack",
     "prepack": "toggle-scripts -postinstall && yarn build",
     "prepublishOnly": "toggle-scripts -prepack",
-    "recommended-bump": "conventional-recommended-bump --preset=conventionalcommits --tag-prefix='' --verbose",
+    "recommended-bump": "conventional-recommended-bump --preset=conventionalcommits --tag-prefix=$(jq .tagPrefix package.json -r) --verbose",
     "release": "bash ./scripts/release.sh",
     "test": "NODE_ENV=test ts-node ./node_modules/.bin/vitest run",
     "test:cov": "yarn test --coverage",
@@ -125,5 +125,6 @@
     "vite": "3.0.4"
   },
   "packageManager": "yarn@4.0.0-rc.14",
-  "readme": "README.md"
+  "readme": "README.md",
+  "tagPrefix": ""
 }

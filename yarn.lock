@@ -929,7 +929,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:5.35.1"
     "@vates/toggle-scripts": "npm:1.0.0"
     "@vitest/coverage-c8": "npm:0.22.1"
-    "@vitest/ui": "npm:0.21.1"
+    "@vitest/ui": "npm:0.22.1"
     chai: "npm:4.3.6"
     conventional-changelog-cli: "npm:2.2.2"
     conventional-recommended-bump: "npm:6.1.0"
@@ -2009,12 +2009,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:0.21.1":
-  version: 0.21.1
-  resolution: "@vitest/ui@npm:0.21.1"
+"@vitest/ui@npm:0.22.1":
+  version: 0.22.1
+  resolution: "@vitest/ui@npm:0.22.1"
   dependencies:
     sirv: "npm:^2.0.2"
-  checksum: afb3623c7ca2e85646f0d15d2ec89654fdaf648011c3ede75b163d9ba3ff637bee07f33b35dc777223bc43a593be0ac7808092db4eb6eaf1706299587473fd6e
+  checksum: 41e74082ae1141a3c90bf564e489922324b68f71813f38c9be1863d566f922090da44a3267547c76fbf03ad75b01ac1fe73e49bd0e4d75f9cd9ddeb5628bed5f
   languageName: node
   linkType: hard
 

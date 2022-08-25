@@ -38,6 +38,10 @@
   description: package release
   color: 74cefc
 
+- name: scope:tests
+  description: testing
+  color: 74cefc
+
 # status labels
 # current state of an issue, pull request, or discussion
 

@@ -31,7 +31,7 @@
     "build": "unbuild",
     "check:ci": "yarn fix:cg && yarn check:spelling && yarn check:types && yarn test && NODE_ENV=production yarn pack -o %s-%v.tgz && yarn clean:pack",
     "check:format": "prettier --check .",
-    "check:lint": "eslint --cache --exit-on-fatal-error --ext cjs,cts,json,md,mjs,ts,yml .",
+    "check:lint": "eslint --cache --exit-on-fatal-error --ext cjs,cts,gql,json,md,mjs,ts,yml .",
     "check:spelling": "cspell lint --color --no-progress --relative $@ \"**\"",
     "check:types": "NODE_OPTIONS='--es-module-specifier-resolution=node --loader=./loader' tsc -p tsconfig.json",
     "check:upgrades": "yarn upgrade-interactive",
@@ -63,6 +63,7 @@
     "@faker-js/faker": "7.4.0",
     "@flex-development/dist-tag": "1.0.0",
     "@flex-development/tutils": "5.0.0",
+    "@graphql-eslint/eslint-plugin": "3.10.7",
     "@types/chai": "4.3.3",
     "@types/conventional-changelog": "3.1.1",
     "@types/conventional-changelog-config-spec": "2.1.1",
@@ -96,6 +97,7 @@
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-unicorn": "43.0.2",
     "eslint-plugin-yml": "1.1.0",
+    "graphql": "16.6.0",
     "growl": "1.10.5",
     "husky": "8.0.1",
     "is-ci": "3.0.1",
@@ -118,6 +120,7 @@
     "yaml-eslint-parser": "1.1.0"
   },
   "resolutions": {
+    "@ardatan/sync-fetch": "larsgw/sync-fetch#head=worker_threads",
     "typescript": "4.8.0-beta",
     "vite": "3.0.4"
   },

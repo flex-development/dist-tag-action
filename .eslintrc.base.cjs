@@ -11,12 +11,18 @@
 const tsconfig = require('tsconfig/dist/tsconfig').loadSync(__dirname).config
 
 /**
+ * @type {boolean}
+ * @const jsx - JSX check
+ */
+const jsx = Boolean(tsconfig.compilerOptions.jsx)
+
+/**
  * @type {import('eslint').Linter.Config}
  * @const config - ESLint configuration object
  */
 const config = {
   env: {
-    es2022: true,
+    [tsconfig.compilerOptions.target]: true,
     node: true
   },
   extends: [
@@ -27,6 +33,7 @@ const config = {
   globals: {
     Chai: 'readonly',
     Console: 'readonly',
+    JSX: jsx ? 'readonly' : false,
     LoadHook: 'readonly',
     LoadHookContext: 'readonly',
     LoadHookResult: 'readonly',
@@ -40,7 +47,7 @@ const config = {
   parser: require.resolve('@typescript-eslint/parser'),
   parserOptions: {
     ecmaFeatures: {
-      jsx: Boolean(tsconfig.compilerOptions.jsx),
+      jsx,
       impliedStrict: true
     },
     emitDecoratorMetadata: tsconfig.compilerOptions.emitDecoratorMetadata,
@@ -184,6 +191,7 @@ const config = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-extra-non-null-assertion': 2,
     '@typescript-eslint/no-extra-parens': 0,
+    '@typescript-eslint/no-extra-semi': 2,
     '@typescript-eslint/no-extraneous-class': [
       2,
       {
@@ -244,7 +252,7 @@ const config = {
         allowShortCircuit: true,
         allowTaggedTemplates: true,
         allowTernary: true,
-        enforceForJSX: false
+        enforceForJSX: jsx
       }
     ],
     '@typescript-eslint/no-unused-vars': [
@@ -329,7 +337,7 @@ const config = {
       1,
       {
         definedTags: ['visibleName'],
-        jsxTags: false
+        jsxTags: jsx
       }
     ],
     'jsdoc/check-types': [1, { unifyParentAndChildTypeChecks: true }],
@@ -455,7 +463,6 @@ const config = {
     'no-array-constructor': 0,
     'no-case-declarations': 0,
     'no-duplicate-imports': 0,
-    'no-empty': 0,
     'no-empty-function': 0,
     'no-ex-assign': 0,
     'no-invalid-this': 0,

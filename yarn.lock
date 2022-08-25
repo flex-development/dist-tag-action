@@ -911,7 +911,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:17.0.3"
     "@commitlint/types": "npm:17.0.0"
     "@faker-js/faker": "npm:7.4.0"
-    "@flex-development/dist-tag": "npm:1.0.0"
+    "@flex-development/dist-tag": "npm:1.0.1"
     "@flex-development/tutils": "npm:5.0.0"
     "@graphql-eslint/eslint-plugin": "npm:3.10.7"
     "@types/chai": "npm:4.3.3"
@@ -971,13 +971,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@flex-development/dist-tag@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@flex-development/dist-tag@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fdist-tag%2F1.0.0%2F2b9e133c9e2fa41926045b890e6a34500e8bb399"
+"@flex-development/dist-tag@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@flex-development/dist-tag@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fdist-tag%2F1.0.1%2F3a19199587e758d7fbea77cd6a57d09b0291e030"
   bin:
     dist-tag: dist/cli.cjs
     dist-tag-esm: dist/cli.mjs
-  checksum: d715615529b35739e622923da3e4be2a850d803480ab375fd8239bc081231283e9f4be08c95b29633551ed305b9b2283d3e2bc16f052213c208dd23f40ccc422
+  checksum: 9dab744579c66aa44cf96684344d37ae7c546e3f994b44d7cb58b5c816091094746386d1701142022cdac02ec91ed609e8720e87625aa046b45e570777637c9c
   languageName: node
   linkType: hard
 

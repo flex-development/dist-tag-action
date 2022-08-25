@@ -7,10 +7,10 @@ bdelr
 bdougie
 bren
 cefc
-chbb
-chbf
-chbh
-chbr
+chbfeat
+chbfix
+chbhotfix
+chbrelease
 commitlintrc
 dawidd6
 dedupe

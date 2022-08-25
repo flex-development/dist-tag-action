@@ -43,5 +43,6 @@ safecrlf
 syncer
 tsnode
 vates
+vitest
 vsicons
 yarnrc

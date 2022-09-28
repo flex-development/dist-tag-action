@@ -22,6 +22,7 @@
     "name": "Lexus Drumgold",
     "url": "https://github.com/unicornware"
   },
+  "type": "module",
   "files": [
     "dist",
     "src"

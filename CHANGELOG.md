@@ -1,3 +1,72 @@
+## [1.1.1](https://github.com/flex-development/dist-tag-action/compare/1.1.0...1.1.1) (2022-09-28)
+
+
+### :package: Build
+
+* use `mkbuild` to build project ([3d58322](https://github.com/flex-development/dist-tag-action/commit/3d58322259d315751cc15b94ba691d920aae3267))
+* **deps-dev:** add @vitest/coverage-c8 ([18e3b88](https://github.com/flex-development/dist-tag-action/commit/18e3b8821ca31788212c1d1761bcdde9061176db))
+* **deps-dev:** bump @flex-development/dist-tag from 1.0.0 to 1.0.1 ([d940703](https://github.com/flex-development/dist-tag-action/commit/d9407039c4cee5b5463f5b6383be479889a1a460))
+* **deps-dev:** bump @types/eslint from 8.4.5 to 8.4.6 ([d8526cb](https://github.com/flex-development/dist-tag-action/commit/d8526cb1c4a37c623fceee1f72ce85d799af18db))
+* **deps-dev:** bump @typescript-eslint/eslint-parser from 5.33.0 to 5.35.1 ([88440a5](https://github.com/flex-development/dist-tag-action/commit/88440a5640cd2e3412cfac70732fc2a3b955d2d4))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin from 5.33.0 to 5.35.1 ([3dc2646](https://github.com/flex-development/dist-tag-action/commit/3dc2646fe32cb587e2e0b4091057c1eef1e601e2))
+* **deps-dev:** bump @vitest/ui from 0.21.1 to 0.22.1 ([33b14d7](https://github.com/flex-development/dist-tag-action/commit/33b14d7810b4fa14775a1c7f96725724f5d0926b))
+* **deps-dev:** bump unbuild from 0.8.7 to 0.8.9 ([5638a83](https://github.com/flex-development/dist-tag-action/commit/5638a834058cc1a225cbc88849f8bb345f9a5e70))
+* **deps-dev:** bump vitest from 0.21.1 to 0.22.1 ([15161cb](https://github.com/flex-development/dist-tag-action/commit/15161cb70328e19cff4432d72a0b8b58dac90471))
+* **deps-dev:** install pure esm version of `dist-tag` from github ([eb279a5](https://github.com/flex-development/dist-tag-action/commit/eb279a5e2aa4cb8cb97b5e82f6e95464afe55b10))
+* **esm:** replace `main` field with `exports` and `module` ([721985b](https://github.com/flex-development/dist-tag-action/commit/721985b80506852a17e69eeeffa130e1293171bd))
+* **esm:** set package type to `module` ([f55fb7a](https://github.com/flex-development/dist-tag-action/commit/f55fb7af2fc77d4b9792d9746f5c6762ab01efe8))
+
+
+### :robot: Continuous Integration
+
+* add `scope:dependencies` label to [@dependabot](https://github.com/dependabot) pull requests ([58c1731](https://github.com/flex-development/dist-tag-action/commit/58c1731de68d22e9cf2d5db5809f68efc9af92c0))
+* remove [@dependabot](https://github.com/dependabot) registry restrictions ([f4c296b](https://github.com/flex-development/dist-tag-action/commit/f4c296bf6c8aa550abbdc8c83acb993b3d31ca19))
+* set reviewers for [@dependabot](https://github.com/dependabot) pull requests ([22ec1f6](https://github.com/flex-development/dist-tag-action/commit/22ec1f6addccb1aaa277736a723687f7ecd302a9))
+* **deps:** bump actions/github-script from 6.1.1 to 6.2.0 ([#26](https://github.com/flex-development/dist-tag-action/issues/26)) ([aa2a6e1](https://github.com/flex-development/dist-tag-action/commit/aa2a6e1881f82c5edac6af0b3f0c453df3ba789c))
+* **deps:** bump actions/github-script from 6.2.0 to 6.3.0 ([#27](https://github.com/flex-development/dist-tag-action/issues/27)) ([aeeb989](https://github.com/flex-development/dist-tag-action/commit/aeeb989a0f42b15e2b9e9e3932c4bd410ad59451))
+* **workflow:** update [@dependabot](https://github.com/dependabot) enable-auto-merge conditions ([1b3348f](https://github.com/flex-development/dist-tag-action/commit/1b3348f615837077d4107f67ffd7670b740a91ec))
+* **workflows:** `add-to-project` ([232a936](https://github.com/flex-development/dist-tag-action/commit/232a936202125d4783ae4f93df140667a2595a3d))
+* **workflows:** add `secrets.PAT_BOT` ([e9af862](https://github.com/flex-development/dist-tag-action/commit/e9af862e946ac5a441cbcc3f101e692cc053b664))
+* **workflows:** add debug step to ci workflow ([55a0ac2](https://github.com/flex-development/dist-tag-action/commit/55a0ac23d8e3a6c06165ba7a0e532a83ac152fa8))
+* **workflows:** add test coverage output to ci workflow ([912e1d9](https://github.com/flex-development/dist-tag-action/commit/912e1d910951d6250ac3ecd99752b693d5cfb71b))
+* **workflows:** cleanup workflows ([fc750c3](https://github.com/flex-development/dist-tag-action/commit/fc750c369ca4c84f31e5d1cdfea7901742f087e6))
+* **workflows:** fix package-ecosystem check for [@dependabot](https://github.com/dependabot) ([7fea72a](https://github.com/flex-development/dist-tag-action/commit/7fea72a48c6d8fcc479f5d00e249bd780873285b))
+* **workflows:** remove `query-linked-issues` ([00bbfe5](https://github.com/flex-development/dist-tag-action/commit/00bbfe5dbd33ad0dd8df1be2bb73c763a20e3a67))
+* **workflows:** require manual review for major [@dependabot](https://github.com/dependabot) updates ([91581c5](https://github.com/flex-development/dist-tag-action/commit/91581c55bd0cb66e90df88abfe2595705a308209))
+* **workflows:** run ci workflow on push to feature and hotfix branches ([b9ac53f](https://github.com/flex-development/dist-tag-action/commit/b9ac53ffa89dfded075317c089211cd0e4fadb96))
+* **workflows:** sign commits for [@dependabot](https://github.com/dependabot) ([86cd4fb](https://github.com/flex-development/dist-tag-action/commit/86cd4fbcb289d06e7044a66dbc2ed17b64fe8140))
+* **workflows:** skip `integrity` for [@dependabot](https://github.com/dependabot) ([5690fba](https://github.com/flex-development/dist-tag-action/commit/5690fbadd6d7c52b5b180768e072815b1ea609c4))
+* **workflows:** sync workflow and job names ([c655f1c](https://github.com/flex-development/dist-tag-action/commit/c655f1c6a244fadca9458d1a31509c2828461208))
+
+
+### :pencil: Documentation
+
+* update `~/.gitconfig` instructions ([80db1d7](https://github.com/flex-development/dist-tag-action/commit/80db1d7fc4c3f54d066ecbf24af7bf25bb50d6a8))
+* update commit type descriptions ([67d2e22](https://github.com/flex-development/dist-tag-action/commit/67d2e222a53d5ed784589868b8d779601c343c9b))
+* **workflows:** update `dependabot-auto` description ([d09574f](https://github.com/flex-development/dist-tag-action/commit/d09574f8e49d4788fced8168c7ef032d2ca8bd7c))
+
+
+### :house_with_garden: Housekeeping
+
+* eslint x graphql support ([15d0f68](https://github.com/flex-development/dist-tag-action/commit/15d0f6880423e4cda76ea03bc5a5f0cc61d4f940))
+* only run checks in lint-staged config ([33aa401](https://github.com/flex-development/dist-tag-action/commit/33aa40124a1fb5cd1f6f20729dc2c64774cb8cbc))
+* update eslint config ([d92ed74](https://github.com/flex-development/dist-tag-action/commit/d92ed74c35c06d4364cc9da3b78f564d48e7f353))
+* update sample gitconfig ([adabd2f](https://github.com/flex-development/dist-tag-action/commit/adabd2f9a1ac14d171fc33b42101aac942412887))
+* **esm:** dev environment cleanup ([dbdaf1a](https://github.com/flex-development/dist-tag-action/commit/dbdaf1a9dddebadb3682733677712fdcd3e6b6d2))
+* **github:** cleanup label descriptions ([25edccb](https://github.com/flex-development/dist-tag-action/commit/25edccbe02f3c4393f9be53b1164b22b66fd728b))
+* **github:** convert issue templates to issue forms ([d960b78](https://github.com/flex-development/dist-tag-action/commit/d960b782bd79ee84d45e92fbd28712a828f80d2a))
+* **github:** remove `type:discussion` label ([6c8ae59](https://github.com/flex-development/dist-tag-action/commit/6c8ae59a7f5bd58badff408c2a06efc5e2d35702))
+* **github:** rename label `scope:deps` to `scope:dependencies` ([f5ef429](https://github.com/flex-development/dist-tag-action/commit/f5ef429ead7ec0b29f69ea0b63dc221114c20061))
+* **github:** update pull request template ([82518ba](https://github.com/flex-development/dist-tag-action/commit/82518ba37b824e61bee06821a487aa1138c2500b))
+* **release:** add tag prefix to local commit message ([9bb2148](https://github.com/flex-development/dist-tag-action/commit/9bb2148332b21b9eb2b98f36694caa54f4855ee0))
+* **release:** read tag prefix from `package.json` ([93776cd](https://github.com/flex-development/dist-tag-action/commit/93776cdbbddb83371af89ea2bdbd48002401a515))
+* **vscode:** let prettier handle shellscript files ([479cc60](https://github.com/flex-development/dist-tag-action/commit/479cc6030f8b62c7e63f656bd9acbb004999c1ca))
+
+
+### :white_check_mark: Testing
+
+* update vitest environment ([ae4c771](https://github.com/flex-development/dist-tag-action/commit/ae4c771918031a74e3ac811b51f6d3f8b4a23786))
+
 ## [1.1.0](https://github.com/flex-development/dist-tag-action/compare/1.0.1-alpha.3...1.1.0) (2022-08-18)
 
 

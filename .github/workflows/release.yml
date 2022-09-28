@@ -118,6 +118,8 @@ jobs:
       - id: release-notes
         name: Generate release notes
         run: yarn conventional-changelog -o $NOTES_FILE
+        env:
+          NODE_NO_WARNINGS: 1
       - id: tag
         name: Create annotated tag
         run: |

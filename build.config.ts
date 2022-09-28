@@ -1,25 +1,25 @@
 /**
- * @file Unbuild Config
- * @module config/unbuild
- * @see https://github.com/unjs/unbuild#configuration
+ * @file Build Config
+ * @module config/build
+ * @see https://github.com/flex-development/mkbuild
  */
 
-import { defineBuildConfig, type BuildConfig } from 'unbuild'
-import pkg from './package.json'
+import { defineBuildConfig, type Config } from '@flex-development/mkbuild'
+import tsconfig from './tsconfig.build.json' assert { type: 'json' }
 
 /**
- * Build options.
+ * Build configuration options.
  *
- * @const {BuildConfig} config
+ * @const {Config} config
  */
-const config: BuildConfig = defineBuildConfig({
-  devDependencies: Object.keys(pkg.devDependencies),
-  entries: ['src/main'],
-  rollup: {
-    esbuild: { logLevel: 'info', minify: true, target: 'esnext' },
-    inlineDependencies: true,
-    json: { compact: true },
-    resolve: {}
+const config: Config = defineBuildConfig({
+  entries: [{ bundle: true, createRequire: true, source: 'src/main.ts' }],
+  esbuild: {
+    minify: true,
+    platform: 'node',
+    target: [tsconfig.compilerOptions.target, 'node16'],
+    treeShaking: true,
+    tsconfig: 'tsconfig.build.json'
   }
 })
 

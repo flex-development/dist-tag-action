@@ -27,6 +27,7 @@ keyid
 larsgw
 lcov
 micnncim
+mkbuild
 nocheck
 nums
 nvmrc

@@ -1,4 +1,3 @@
-ahmadnassri
 ardatan
 autocrlf
 autosetuprebase
@@ -12,7 +11,7 @@ chbfix
 chbhotfix
 chbrelease
 commitlintrc
-dawidd6
+dawidd
 dedupe
 dessant
 dohm
@@ -27,21 +26,14 @@ iife
 keyid
 larsgw
 lcov
-lintstagedrc
 micnncim
 nocheck
-noreply
-npmjs
-npmrc
 nums
 nvmrc
-pdel
 preid
 printenv
-rickstaa
 safecrlf
 syncer
-tsnode
 vates
 vitest
 vsicons

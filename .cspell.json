@@ -26,7 +26,7 @@
     "dist/",
     "yarn.lock"
   ],
-  "ignoreRegExpList": [],
+  "ignoreRegExpList": ["/from\\s+(['\"]).*\\1/"],
   "ignoreWords": [],
   "language": "en-US",
   "patterns": [],

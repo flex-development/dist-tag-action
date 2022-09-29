@@ -123,6 +123,10 @@
     "vitest-github-actions-reporter": "0.8.1",
     "yaml-eslint-parser": "1.1.0"
   },
+  "bundleDependencies": [
+    "@actions/core",
+    "@flex-development/dist-tag"
+  ],
   "resolutions": {
     "@ardatan/sync-fetch": "larsgw/sync-fetch#head=worker_threads",
     "esbuild": "0.15.9",

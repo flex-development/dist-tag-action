@@ -11,6 +11,7 @@
       [
         "action",
         "deps",
+        "deps-bundle",
         "deps-dev",
         "github",
         "helpers",

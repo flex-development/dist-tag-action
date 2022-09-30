@@ -13,14 +13,13 @@ import tsconfig from './tsconfig.build.json' assert { type: 'json' }
  * @const {Config} config
  */
 const config: Config = defineBuildConfig({
-  entries: [{ bundle: true, createRequire: true, source: 'src/main.ts' }],
-  esbuild: {
-    minify: true,
-    platform: 'node',
-    target: [tsconfig.compilerOptions.target, 'node16'],
-    treeShaking: true,
-    tsconfig: 'tsconfig.build.json'
-  }
+  bundle: true,
+  minify: true,
+  platform: 'node',
+  source: 'src/main.ts',
+  target: [tsconfig.compilerOptions.target, 'node16'],
+  treeShaking: true,
+  tsconfig: 'tsconfig.build.json'
 })
 
 export default config

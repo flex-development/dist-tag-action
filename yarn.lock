@@ -799,7 +799,7 @@ __metadata:
     "@commitlint/types": "npm:17.0.0"
     "@faker-js/faker": "npm:7.4.0"
     "@flex-development/dist-tag": "npm:2.0.0"
-    "@flex-development/mkbuild": "flex-development/mkbuild#head=release/1.0.0-alpha.1"
+    "@flex-development/mkbuild": "npm:1.0.0-alpha.3"
     "@flex-development/tutils": "npm:5.0.0"
     "@graphql-eslint/eslint-plugin": "npm:3.10.7"
     "@types/chai": "npm:4.3.3"
@@ -868,9 +868,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@flex-development/mkbuild@flex-development/mkbuild#head=release/1.0.0-alpha.1":
-  version: 1.0.0-alpha.1
-  resolution: "@flex-development/mkbuild@https://github.com/flex-development/mkbuild.git#commit=3397e74b2dd5323eae9171ff6d7b3881dddbfe66"
+"@flex-development/mkbuild@npm:1.0.0-alpha.3":
+  version: 1.0.0-alpha.3
+  resolution: "@flex-development/mkbuild@npm:1.0.0-alpha.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fmkbuild%2F1.0.0-alpha.3%2F8b15fe94c33a93113603f1a81ddc429c2cdca207"
   dependencies:
     colorette: "npm:2.0.19"
     consola: "npm:2.15.3"
@@ -888,12 +888,9 @@ __metadata:
   peerDependencies:
     esbuild: ">=0.15.0"
     typescript: ">=3.7.2"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
   bin:
-    mkbuild: ./dist/cli.mjs
-  checksum: 594d2f3d4dbb08a2613e2258420337b19cf6ca4dac2d0eb1421a7b055c8125d68edd815864e3f076f9e935a6137732a72eb57bd9d73aeee90fc28f07ce3a7685
+    mkbuild: dist/cli.mjs
+  checksum: 77b7aaa3b41fc49c9423a401beec4ecc4ac62988f65743a02dba2a1a9f6a920e77957d456bebfb51b9172418ac29c0ee2209f0b16ef746502656edf56fb2901f
   languageName: node
   linkType: hard
 

@@ -63,7 +63,7 @@
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
     "@faker-js/faker": "7.6.0",
-    "@flex-development/dist-tag": "2.0.0",
+    "@flex-development/dist-tag": "3.0.0",
     "@flex-development/mkbuild": "1.0.0-alpha.9",
     "@flex-development/tutils": "5.0.1",
     "@graphql-eslint/eslint-plugin": "3.13.1",

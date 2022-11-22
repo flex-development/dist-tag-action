@@ -1,3 +1,32 @@
+## [1.1.2](https://github.com/flex-development/dist-tag-action/compare/1.1.1...1.1.2) (2022-11-21)
+
+
+### :package: Build
+
+* **deps-bundle:** add `bundleDependencies` ([8334cb7](https://github.com/flex-development/dist-tag-action/commit/8334cb714783108515b011c63142160d6a1b6e63))
+* **deps-bundle:** bump @actions/core from 1.9.1 to 1.10.0 ([8dc0e4d](https://github.com/flex-development/dist-tag-action/commit/8dc0e4dfc60974568797ce9deb2bf76ea525b4cb))
+* **deps-bundle:** bump @flex-development/dist-tag from 2.0.0 to 3.0.0 ([4b5db1b](https://github.com/flex-development/dist-tag-action/commit/4b5db1bc41e7f1a5be8c961b466db18a6cbdce43))
+* **deps-dev:** cleanup + upgrade deps ([9a88b44](https://github.com/flex-development/dist-tag-action/commit/9a88b441f57a0d73440fb324bee36ab17bf8a7dc))
+
+
+### :robot: Continuous Integration
+
+* **deps:** bump actions/checkout from 3.0.2 to 3.1.0 ([#31](https://github.com/flex-development/dist-tag-action/issues/31)) ([c2fa2dd](https://github.com/flex-development/dist-tag-action/commit/c2fa2dd4faf85daa47ff2f05b84be8b8f96005cf))
+* **deps:** bump actions/github-script from 6.3.0 to 6.3.1 ([#29](https://github.com/flex-development/dist-tag-action/issues/29)) ([d190cd6](https://github.com/flex-development/dist-tag-action/commit/d190cd6a53cdf73c29c3e3f1f427f6b9ab8c1737))
+* **deps:** bump actions/github-script from 6.3.1 to 6.3.2 ([#34](https://github.com/flex-development/dist-tag-action/issues/34)) ([ab1c624](https://github.com/flex-development/dist-tag-action/commit/ab1c624c4db970dc88b06def2a3a3a3a1cc3b577))
+* **deps:** bump actions/github-script from 6.3.2 to 6.3.3 ([#35](https://github.com/flex-development/dist-tag-action/issues/35)) ([1e339fa](https://github.com/flex-development/dist-tag-action/commit/1e339fa3b126436b387c578f56ff923b1d61f90c))
+* **deps:** bump crazy-max/ghaction-import-gpg from 5.1.0 to 5.2.0 ([#36](https://github.com/flex-development/dist-tag-action/issues/36)) ([c760aeb](https://github.com/flex-development/dist-tag-action/commit/c760aebd0997a2ab776c8df64a473345cfa8fa09))
+* **deps:** bump dependabot/fetch-metadata from 1.3.3 to 1.3.4 ([#30](https://github.com/flex-development/dist-tag-action/issues/30)) ([cd33771](https://github.com/flex-development/dist-tag-action/commit/cd3377164f0faf3c65032f7d59f44cedc5655781))
+* **deps:** bump dependabot/fetch-metadata from 1.3.4 to 1.3.5 ([#37](https://github.com/flex-development/dist-tag-action/issues/37)) ([4e378bf](https://github.com/flex-development/dist-tag-action/commit/4e378bfa64c68ab5d3d7fde14bb1c6a96231b94c))
+* **deps:** bump hmarr/debug-action from 2.0.1 to 2.1.0 ([#32](https://github.com/flex-development/dist-tag-action/issues/32)) ([f7adab9](https://github.com/flex-development/dist-tag-action/commit/f7adab904125953a60ad1c70cb0d7670171e10bd))
+* **deps:** bump octokit/graphql-action from 2.2.22 to 2.2.23 ([#33](https://github.com/flex-development/dist-tag-action/issues/33)) ([54e1f3d](https://github.com/flex-development/dist-tag-action/commit/54e1f3d477972025634bc5395baa5c4da662ae58))
+* **workflows:** hide loader warning when generating release notes ([708824f](https://github.com/flex-development/dist-tag-action/commit/708824fa8267cc82fd9b6a31eb09f29d3733d90c))
+
+
+### :house_with_garden: Housekeeping
+
+* **github:** add commit scope to `deps-bundle` ([5d08e53](https://github.com/flex-development/dist-tag-action/commit/5d08e536408e65148db7c265a27caaabd3445166))
+
 ## [1.1.1](https://github.com/flex-development/dist-tag-action/compare/1.1.0...1.1.1) (2022-09-28)
 
 

@@ -59,7 +59,7 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
-    "@actions/core": "1.9.1",
+    "@actions/core": "1.10.0",
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
     "@faker-js/faker": "7.6.0",
